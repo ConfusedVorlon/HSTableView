@@ -181,6 +181,13 @@ class HSTVRowInfo: Equatable {
         return theResult
     }
     
+//    internal func inherited2<T>(getResult: (HSTVRowInfo?) -> T? ) -> T? {
+  //      return inherited({ )
+
+    //}
+ 
+    
+ 
 //    private func inherited2<T>(getResult: (HSTVRowInfo?) -> T? ) -> T? {
 //        var responder : HSTVRowInfo? = self
 //        var theSubtitle : T? = nil
@@ -198,83 +205,51 @@ class HSTVRowInfo: Equatable {
 //        return theSubtitle
 //    }
     
-    internal func inheritedTitle() -> String? {
-        return inherited({ row -> String? in
-            return row?.title
-        })
-    }
     
-    internal func inheritedSubtitle() -> String? {
-        return inherited({ row -> String? in
-            return row?.subtitle
-        })
-    }
+    //two things here;
+    //1) trailing closure param doesn't need ()
+    //2) for sinvle argument closure, you don't need to give the boilerplate, and can refer to first input argument with $0
+    internal func inheritedTitle() -> String? { return inherited { $0?.title } }
+
+//    internal func inheritedTitle() -> String? {
+//        return inherited({ row -> String? in
+//            return row?.title
+//        })
+//    }
     
-    internal func inheritedTitleColor() -> UIColor? {
-        return inherited({ row -> UIColor? in
-            return row?.titleColor
-        })
-    }
+    internal func inheritedSubtitle() -> String? { return inherited { $0?.subtitle } }
+
     
-    internal func inheritedSubtitleColor() -> UIColor? {
-        return inherited({ row -> UIColor? in
-            return row?.subtitleColor
-        })
-    }
+    internal func inheritedTitleColor() -> UIColor? { return inherited{ $0?.titleColor } }
     
-    internal func inheritedLeftImageName() -> String? {
-        return inherited({ row -> String? in
-            return row?.leftImageName
-        })
-    }
+    internal func inheritedSubtitleColor() -> UIColor? { return inherited{ $0?.subtitleColor }}
     
-    internal lazy var inheritedLeftImageColor : UIColor? = {
-        return self.inherited({ row -> UIColor? in
-            return row?.leftImageColor
-        })
-    }()
+    internal func inheritedLeftImageName() -> String? { return inherited{ $0?.leftImageName }}
     
-    internal lazy var inheritedTintChevronDisclosures : Bool? = {
-        return self.inherited({ row -> Bool? in
-            return row?.tintChevronDisclosures
-        })
-    }()
+    internal lazy var inheritedLeftImageColor : UIColor? = { self.inherited { $0?.leftImageColor } }()
     
-    internal lazy var inheritedTintColor : UIColor? = {
-        return self.inherited({ row -> UIColor? in
-            return row?.tintColor
-        })
-    }()
+    internal lazy var inheritedTintChevronDisclosures : Bool? = { self.inherited { $0?.tintChevronDisclosures  } }()
+    
+    internal lazy var inheritedTintColor : UIColor? = { self.inherited{ $0?.tintColor } }()
     
     internal lazy var inheritedSelectionStyle : UITableViewCellSelectionStyle = {
-        let style = self.inherited({ row -> UITableViewCellSelectionStyle? in
-            return row?.selectionStyle
-        })
-        
+        let style = self.inherited { $0?.selectionStyle }
         return style ?? .Default
     }()
     
     internal lazy var inheritedEditingStyle : UITableViewCellEditingStyle = {
-        let style = self.inherited({ row -> UITableViewCellEditingStyle? in
-            return row?.editingStyle
-        })
-        
+        let style = self.inherited { $0?.editingStyle }
         return style ?? .None
     }()
     
     
     internal func inheritedAccessoryType() -> UITableViewCellAccessoryType {
-        let style = inherited({ row -> UITableViewCellAccessoryType? in
-            return row?.accessoryType
-        })
+        let style = inherited{ $0?.accessoryType }
         return style ?? .None
     }
     
     internal lazy var inheritedStyle: UITableViewCellStyle = {
-        let style = self.inherited({ row -> UITableViewCellStyle? in
-            return row?.style
-        })
-        
+        let style = self.inherited { $0?.style }
         return style ?? .Subtitle
     }()
     
