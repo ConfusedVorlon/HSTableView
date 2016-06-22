@@ -12,7 +12,6 @@
 		D4232C171CF8BC20004C1D44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4232C151CF8BC20004C1D44 /* Main.storyboard */; };
 		D4232C191CF8BC20004C1D44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4232C181CF8BC20004C1D44 /* Assets.xcassets */; };
 		D4232C1C1CF8BC20004C1D44 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4232C1A1CF8BC20004C1D44 /* LaunchScreen.storyboard */; };
-		D46F0F941CFDABAC00FCA676 /* DummyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D46F0F931CFDABAC00FCA676 /* DummyCell.xib */; };
 		D46F0F9B1CFDB23000FCA676 /* MyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D46F0F9A1CFDB23000FCA676 /* MyTableViewCell.xib */; };
 		D46F0F9E1D0326C000FCA676 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D46F0F9D1D0326C000FCA676 /* UIKit.framework */; };
 		D46F0FA01D0326C700FCA676 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D46F0F9F1D0326C700FCA676 /* CoreGraphics.framework */; };
@@ -35,7 +34,6 @@
 		D4232C181CF8BC20004C1D44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4232C1B1CF8BC20004C1D44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D4232C1D1CF8BC20004C1D44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D46F0F931CFDABAC00FCA676 /* DummyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DummyCell.xib; sourceTree = "<group>"; };
 		D46F0F9A1CFDB23000FCA676 /* MyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyTableViewCell.xib; sourceTree = "<group>"; };
 		D46F0F9D1D0326C000FCA676 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D46F0F9F1D0326C700FCA676 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -65,13 +63,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D4232C051CF8BC20004C1D44 = {
+		53037B421D1071F4007B49FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				D46F0FA31D0326EA00FCA676 /* Foundation.framework */,
 				D46F0FA11D0326DE00FCA676 /* CoreFoundation.framework */,
 				D46F0F9F1D0326C700FCA676 /* CoreGraphics.framework */,
 				D46F0F9D1D0326C000FCA676 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D4232C051CF8BC20004C1D44 = {
+			isa = PBXGroup;
+			children = (
+				53037B421D1071F4007B49FD /* Frameworks */,
 				D4232C101CF8BC20004C1D44 /* Demo */,
 				D4232C0F1CF8BC20004C1D44 /* Products */,
 			);
@@ -105,7 +111,6 @@
 			children = (
 				D4D226D11D05E308003836EA /* MyTableViewCell.swift */,
 				D46F0F9A1CFDB23000FCA676 /* MyTableViewCell.xib */,
-				D46F0F931CFDABAC00FCA676 /* DummyCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -114,11 +119,11 @@
 			isa = PBXGroup;
 			children = (
 				D4D226C51D05E2F3003836EA /* HSTableView.swift */,
+				D4D226CA1D05E2F3003836EA /* HSTVTableInfo.swift */,
 				D4D226C61D05E2F3003836EA /* HSTVRowInfo.swift */,
 				D4D226C71D05E2F3003836EA /* HSTVRowInfoHelpers.swift */,
 				D4D226C81D05E2F3003836EA /* HSTVSection.swift */,
 				D4D226C91D05E2F3003836EA /* HSTVSectionInfo.swift */,
-				D4D226CA1D05E2F3003836EA /* HSTVTableInfo.swift */,
 			);
 			name = HSTableView;
 			path = ../../HSTableView;
@@ -185,7 +190,6 @@
 				D46F0F9B1CFDB23000FCA676 /* MyTableViewCell.xib in Resources */,
 				D4232C1C1CF8BC20004C1D44 /* LaunchScreen.storyboard in Resources */,
 				D4232C191CF8BC20004C1D44 /* Assets.xcassets in Resources */,
-				D46F0F941CFDABAC00FCA676 /* DummyCell.xib in Resources */,
 				D4232C171CF8BC20004C1D44 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
