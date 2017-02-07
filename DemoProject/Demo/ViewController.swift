@@ -87,12 +87,17 @@ class ViewController: UIViewController {
         //Row value is linked to the user default 'TestDefault'
         self.table.addSection("Linked to default")
         row = HSTVRowInfo(title: "Linked to UserDefault 'TestDefault'")
-        row.linkTo(userDefault:"TestDefault", trueSubtitle: "TestDefault is true", falseSubtitle: "TestDefault is false")
+        row.handleCheckmark(userDefault:"TestDefault",
+                            checkedSubtitle: "Checked (user default true)",
+                            uncheckedSubtitle: "UnChecked (user default false)")
         table += row
         
         //Row value is linked to the user default 'TestDefault', but checkmark shows when value is false
-        row = HSTVRowInfo(title: "Linked to UserDefault TestOppositeDefault")
-        row.linkTo(userDefault:"TestOppositeDefault", trueSubtitle: "TestDefault is true", falseSubtitle: "TestDefault is false", checkmarkShowsForFalse: true)
+        row = HSTVRowInfo(title: "Linked to UserDefault 'TestOppositeDefault'")
+        row.handleCheckmark(userDefault:"TestOppositeDefault",
+                            checkedSubtitle: "Checked (user default false)",
+                            uncheckedSubtitle: "UnChecked (user default true)",
+                            checkmarkShowsForFalse: true)
         table += row
         
         //Various accessory views
@@ -175,7 +180,6 @@ class ViewController: UIViewController {
             cell.detailTextLabel?.textColor=UIColor.white
         }
         section.info.reuseIdentifier="orange"
-        
         
         self.table.applyDataUpdate()
     }
