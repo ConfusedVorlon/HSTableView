@@ -20,7 +20,7 @@ class HSTVSectionInfo: HSTVRowInfo {
     }
     
     override func nextResponder() -> HSTVRowInfo? {
-        return table.tableInfo
+        return table.info
     }
     
     func viewForHeaderInSection() -> UIView?

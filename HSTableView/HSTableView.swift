@@ -20,7 +20,7 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
         case sectionDoesNotExist(indexPath:IndexPath)
     }
     
-    var tableInfo:HSTVTableInfo! {
+    var info:HSTVTableInfo! {
         willSet (newTableInfo){
             newTableInfo.table=self
         }
@@ -31,7 +31,7 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
         self.delegate=self
         self.dataSource=self
         self.rowHeight=UITableViewAutomaticDimension
-        self.tableInfo=HSTVTableInfo(table: self)
+        self.info=HSTVTableInfo(table: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -111,13 +111,13 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
     /// - Returns: the section
     @discardableResult func addSection(_ title: String?) -> HSTVSection{
         let newSection=HSTVSection(table: self);
-        newSection.sectionInfo.title = title
+        newSection.info.title = title
         
         return addSection(newSection)
     }
     
     
-    func rowInfoFor(_ indexPath:IndexPath) throws -> HSTVRowInfo {
+    func infoFor(_ indexPath:IndexPath) throws -> HSTVRowInfo {
         
         guard (indexPath.section<sections.count) else {
             throw HSTableViewError.sectionDoesNotExist(indexPath: indexPath)
@@ -129,13 +129,13 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
             throw HSTableViewError.rowDoesNotExist(indexPath: indexPath)
         }
 
-        let rowInfo=section.rows[indexPath.row];
-        rowInfo.lastIndexPath = indexPath
+        let info=section.rows[indexPath.row];
+        info.lastIndexPath = indexPath
         
-        return rowInfo
+        return info
     }
     
-    func sectionInfoFor(_ section: Int) throws -> HSTVSectionInfo {
+    func infoFor(_ section: Int) throws -> HSTVSectionInfo {
         
         guard (section<sections.count) else {
             throw HSTableViewError.sectionDoesNotExist(indexPath: IndexPath.init(row: -1, section: section))
@@ -143,7 +143,7 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
         
         let section = sections[section]
  
-        return section.sectionInfo
+        return section.info
     }
     
     func delete(_ row: HSTVRowInfo)
@@ -161,7 +161,7 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let ri = try! self.rowInfoFor(indexPath)
+        let ri = try! self.infoFor(indexPath)
         return ri.cell()
     }
     
@@ -174,42 +174,42 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
-        let ri = try! self.rowInfoFor(indexPath)
+        let ri = try! self.infoFor(indexPath)
         ri.tableView(willDisplayCell: cell, forRowAtIndexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        let ri = try! self.rowInfoFor(indexPath)
+        let ri = try! self.infoFor(indexPath)
         ri.tableViewDidSelectRow()
     }
     
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath)
     {
-        let ri = try! self.rowInfoFor(indexPath)
+        let ri = try! self.infoFor(indexPath)
         ri.tableViewAccessoryButtonTapped()
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        let ri = try! self.rowInfoFor(indexPath)
+        let ri = try! self.infoFor(indexPath)
         return ri.tableViewEstimatedHeightForRow();
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        let ri = try! self.rowInfoFor(indexPath)
+        let ri = try! self.infoFor(indexPath)
         return ri.tableViewHeightForRow();
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
-        let si = try! self.sectionInfoFor(section)
+        let si = try! self.infoFor(section)
         return si.tableViewHeightForHeaderInSection()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
-        let si = try! self.sectionInfoFor(section)
+        let si = try! self.infoFor(section)
         return si.viewForHeaderInSection()
     }
     
@@ -217,19 +217,19 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 
-        let ri = try! self.rowInfoFor(indexPath)
+        let ri = try! self.infoFor(indexPath)
         return (ri.inheritedEditingStyle == .delete)
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        let ri = try! self.rowInfoFor(indexPath)
+        let ri = try! self.infoFor(indexPath)
         return ri.inheritedEditingStyle
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle==UITableViewCellEditingStyle.delete)
         {
-            let ri = try! self.rowInfoFor(indexPath)
+            let ri = try! self.infoFor(indexPath)
             ri.tableViewDidDeleteRow()
         }
     }

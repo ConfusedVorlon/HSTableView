@@ -28,9 +28,9 @@ this function completely defines the example table
         table.allowsSelectionDuringEditing=true
         // Provide defaults for all rows in the table
         // This will apply unless a value is set at a more specific level (section or row)
-        table.tableInfo.subtitleColor = UIColor.lightGray
-        table.tableInfo.subtitle="Table default subtitle"
-        table.tableInfo.clickHandler = {row in
+        table.info.subtitleColor = UIColor.lightGray
+        table.info.subtitle="Table default subtitle"
+        table.info.clickHandler = {row in
             print("Table handler click handler, \(row.lastIndexPath.section),\(row.lastIndexPath.row)")
             row.subtitle="clicked at \(Date.init())"
             row.redrawCell(UITableViewRowAnimation.fade)
@@ -39,8 +39,8 @@ this function completely defines the example table
         // Add a section with a simple title
         var section=self.table.addSection("Regular cells")
         // Provide some defaults for items in this section
-        section.sectionInfo.titleColor=UIColor.blue
-        section.sectionInfo.subtitleColor=UIColor.orange
+        section.info.titleColor=UIColor.blue
+        section.info.subtitleColor=UIColor.orange
         
         //First row shows a simple click handler that reloads the table data
         var row=HSTVRowInfo(title:"Reload Table",subtitle: "Number of rows in first section is somewhat random")
@@ -88,7 +88,7 @@ this function completely defines the example table
         
         //Various accessory views
         section=self.table.addSection("Accessory views")
-        section.sectionInfo.subtitle=""
+        section.info.subtitle=""
         
         row = HSTVRowInfo(title:"Chevron")
         row.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
@@ -130,10 +130,10 @@ this function completely defines the example table
         
         //Row loaded from xib
         section = self.table.addSection("Custom Xib")
-        section.sectionInfo.subtitle="Section Override"
+        section.info.subtitle="Section Override"
         let myNib = UINib(nibName: "MyTableViewCell", bundle: nil)
-        section.sectionInfo.nib=myNib
-        section.sectionInfo.estimatedRowHeight=150
+        section.info.nib=myNib
+        section.info.estimatedRowHeight=150
         
         for i in 1...2 {
             let row=HSTVRowInfo(title:"One: \(i)")
@@ -153,7 +153,7 @@ this function completely defines the example table
         
         //style after create handler in this section customises the row in code
         //setting a reuseIdentifier makes sure that this cell is not re-used elsewhere
-        section.sectionInfo.styleAfterCreateHandler = {
+        section.info.styleAfterCreateHandler = {
             row,cell in
             
             //os caches imageNamed results
@@ -165,7 +165,7 @@ this function completely defines the example table
             cell.textLabel?.textColor=UIColor.white
             cell.detailTextLabel?.textColor=UIColor.white
         }
-        section.sectionInfo.reuseIdentifier="orange"
+        section.info.reuseIdentifier="orange"
         
         
         self.table.applyDataUpdate()

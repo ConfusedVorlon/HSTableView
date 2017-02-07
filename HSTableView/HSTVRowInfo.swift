@@ -80,7 +80,7 @@ class HSTVRowInfo: Equatable {
     }
     
     func nextResponder() -> HSTVRowInfo? {
-        let next=section?.sectionInfo
+        let next=section?.info
         
         return next
     }

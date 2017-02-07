@@ -14,7 +14,7 @@ class HSTVSection {
     
     weak var table: HSTableView!
     
-    var sectionInfo:HSTVSectionInfo! {
+    var info:HSTVSectionInfo! {
         willSet (newSectionInfo){
             newSectionInfo.section=self
             newSectionInfo.table=table;
@@ -23,7 +23,7 @@ class HSTVSection {
     
     init (table: HSTableView) {
         self.table=table
-        self.sectionInfo=HSTVSectionInfo(table:table, section: self)
+        self.info=HSTVSectionInfo(table:table, section: self)
     }
     
     /**
