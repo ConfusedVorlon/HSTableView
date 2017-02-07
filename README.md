@@ -1,7 +1,8 @@
 # HSTableView
 
 A better UITableView. Rows are managed by objects. Things happen with blocks.
-Your whole table is declared up front with no need for delegates
+
+Your whole table is declared up front with no delegates.
 
 The table view uses a responder chain approach to provide settings. Any setting can be set at the row level, the section level or the table level.
 
