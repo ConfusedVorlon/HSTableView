@@ -149,14 +149,14 @@ class ViewController: UIViewController {
             {
                 row.subtitle="subtitle"
             }
-            self.table.addRow(row)
+            table += row
         }
         
         //Nil title for section makes the header invisibile
         section=self.table.addSection(nil)
         for i in 1...2 {
             let row=HSTVRowInfo(title:"Section with no header \(i)")
-            self.table.addRow(row)
+            table += row
         }
         
         //style after create handler in this section customises the row in code

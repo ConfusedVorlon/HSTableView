@@ -26,6 +26,11 @@ class HSTVSection {
         self.sectionInfo=HSTVSectionInfo(table:table, section: self)
     }
     
+    /**
+     Adds a row to this section
+     
+     The convenience function += can also be used e.g. ```section+=row```
+     */
     func addRow(_ row: HSTVRowInfo) {
         row.section=self;
         row.table=table;

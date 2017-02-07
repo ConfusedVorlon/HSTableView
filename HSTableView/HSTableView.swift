@@ -55,6 +55,8 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
     
     /**
      Updates the internal data model with the pending information
+     TODO - At the moment, this just calls reload data
+     In future ths will sensibly add/remove rows based on changes relative to the existing data
      Calls Reload data
  */
     func applyDataUpdate() -> Void {
