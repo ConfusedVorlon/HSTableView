@@ -31,10 +31,6 @@ pod 'HSTableView'
 
 A simple table with three rows and click handlers for each:
 
-![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/simpleDemo.png)
-
-this function completely defines the example table
-
 ```swift
     
     func populateTable()
@@ -42,6 +38,7 @@ this function completely defines the example table
         table.startDataUpdate()
         
         self.table.addSection()
+        //All the rows have the same accessory type, so define it at the table level
         table.info.accessoryType = .disclosureIndicator
 
         table += HSTVRowInfo(title:"Randoms") {
@@ -62,6 +59,9 @@ this function completely defines the example table
         self.table.applyDataUpdate()
     }
 ```
+
+![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/simpleDemo.png)
+
 
 ##Detailed Demo
 
