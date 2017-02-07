@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         // Provide defaults for all rows in the table
         // This will apply unless a value is set at a more specific level (section or row)
         table.tableInfo.subtitleColor = UIColor.lightGray
-        table.tableInfo.subtitle="Table override"
+        table.tableInfo.subtitle="Table default subtitle"
         table.tableInfo.clickHandler = {row in
             print("Table handler click handler, \(row.lastIndexPath.section),\(row.lastIndexPath.row)")
             row.subtitle="clicked at \(Date.init())"
@@ -78,19 +78,19 @@ class ViewController: UIViewController {
         
         // Simple swipe to delete row
         self.table.addSection("Editable")
-        row = HSTVRowInfo(title: "Delete Me")
+        row = HSTVRowInfo(title: "Swipe to delete")
         row.editingStyle=UITableViewCellEditingStyle.delete
         row.deleteHandler=row.simpleDeleteHandler
         table += row
         
         //Row value is linked to the user default 'TestDefault'
         self.table.addSection("Linked to default")
-        row = HSTVRowInfo(title: "Linked to NSUserDefault TestDefault")
+        row = HSTVRowInfo(title: "Linked to UserDefault 'TestDefault'")
         row.linkTo("TestDefault", trueSubtitle: "TestDefault is true", falseSubtitle: "TestDefault is false")
         table += row
         
         //Row value is linked to the user default 'TestDefault', but checkmark shows when value is false
-        row = HSTVRowInfo(title: "Linked to NSUserDefault TestOppositeDefault")
+        row = HSTVRowInfo(title: "Linked to UserDefault TestOppositeDefault")
         row.linkTo("TestOppositeDefault", trueSubtitle: "TestDefault is true", falseSubtitle: "TestDefault is false", checkmarkShowsForFalse: true)
         table += row
         
