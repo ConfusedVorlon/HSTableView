@@ -8,71 +8,66 @@
 
 import UIKit
 
-typealias HSClickHandler = (HSTVRowInfo)->Void
-typealias HSCellStyler = (HSTVRowInfo,UITableViewCell)->Void
+public typealias HSClickHandler = (HSTVRowInfo)->Void
+public typealias HSCellStyler = (HSTVRowInfo,UITableViewCell)->Void
 
-func == (lhs: HSTVRowInfo, rhs: HSTVRowInfo) -> Bool {
+public func == (lhs: HSTVRowInfo, rhs: HSTVRowInfo) -> Bool {
     return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
 }
 
-class HSTVRowInfo: Equatable {
+public class HSTVRowInfo: Equatable {
     weak var section: HSTVSection?
     weak var table: HSTableView!
-    var lastIndexPath: IndexPath!
+    public var lastIndexPath: IndexPath!
     
-    var style:UITableViewCellStyle? // Defaults to .Subtitle
-    var nib:UINib?
-    var reuseIdentifier:String?
+    public var style:UITableViewCellStyle? // Defaults to .Subtitle
+    public var nib:UINib?
+    public var reuseIdentifier:String?
     
 /**
      The value of textLabel.text is always set to the value of title (even if it is nil)
      This means that if you have a custom cell with no textLabel, then the OS will create a textLabel.
      You'll want to make sure that is hidden either in your cell's initialisation, or in your styleAfterCreateHandler
      */
-    var title:String?
-    var titleColor:UIColor?
+    public var title:String?
+    public var titleColor:UIColor?
 /**
      The value of detailTextLabel.text is always set to the value of subtitle (even if it is nil)
      */
-    var subtitle:String?
-    var subtitleColor:UIColor?
+    public var subtitle:String?
+    public var subtitleColor:UIColor?
     
-    var leftImageName:String?
+    public var leftImageName:String?
     /**
      If set, then any image set through leftImageName will be rendered as a template with this colour
      */
-    var leftImageColor:UIColor?
+    public var leftImageColor:UIColor?
     /**
      If set, the chevron image is swapped for one rendered with the disclosure colour
      */
-    var tintChevronDisclosures:Bool?
-    var tintColor:UIColor?
+    public var tintChevronDisclosures:Bool?
+    public var tintColor:UIColor?
     
     /**
      Note that only grey/default and none are honoured from iOS7
  */
-    var selectionStyle:UITableViewCellSelectionStyle?
-    var accessoryType:UITableViewCellAccessoryType?
-    var editingStyle:UITableViewCellEditingStyle? //Defaults to .None
+    public var selectionStyle:UITableViewCellSelectionStyle?
+    public var accessoryType:UITableViewCellAccessoryType?
+    public var editingStyle:UITableViewCellEditingStyle? //Defaults to .None
     
-    var clickHandler:HSClickHandler?
-    var deleteHandler:HSClickHandler?
-    var accessoryClickHandler:HSClickHandler?
-    var styleAfterCreateHandler:HSCellStyler?
-    var styleBeforeDisplayHandler:HSCellStyler?
+    public var clickHandler:HSClickHandler?
+    public var deleteHandler:HSClickHandler?
+    public var accessoryClickHandler:HSClickHandler?
+    public var styleAfterCreateHandler:HSCellStyler?
+    public var styleBeforeDisplayHandler:HSCellStyler?
 
     
-    var autoDeselect:Bool? // Defaults to true
-    var rowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension
-    var estimatedRowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension. Returns rowHeight if that is set.
+    public var autoDeselect:Bool? // Defaults to true
+    public var rowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension
+    public var estimatedRowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension. Returns rowHeight if that is set.
     
-    convenience init (title: String?)
-    {
-        self.init()
-        self.title=title
-    }
     
-    convenience init (title: String?, subtitle: String?)
+    public convenience init (title: String?, subtitle: String? = nil)
     {
         self.init()
         self.title=title
@@ -162,7 +157,7 @@ class HSTVRowInfo: Equatable {
         
     }
     
-    func redrawCell(_ withRowAnimation: UITableViewRowAnimation) -> Void {
+    public func redrawCell(_ withRowAnimation: UITableViewRowAnimation) -> Void {
         table.reloadRows(at: [self.lastIndexPath], with: withRowAnimation)
     }
     

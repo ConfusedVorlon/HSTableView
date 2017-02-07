@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HSTVSectionInfo: HSTVRowInfo {
+public class HSTVSectionInfo: HSTVRowInfo {
     var headerHeight:CGFloat? // Defaults to 40 if title is set, or 0 if it is not
     var footerHeight:CGFloat? // Defaults to 0
     var index=0

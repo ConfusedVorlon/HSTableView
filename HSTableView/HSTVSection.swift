@@ -9,12 +9,12 @@
 import Foundation
 
 /// HSTVSection holds an array of HSTVRows
-class HSTVSection {
+public class HSTVSection {
     var rows:[HSTVRowInfo]=[HSTVRowInfo]()
     
     weak var table: HSTableView!
     
-    var info:HSTVSectionInfo! {
+    public var info:HSTVSectionInfo! {
         willSet (newSectionInfo){
             newSectionInfo.section=self
             newSectionInfo.table=table;
@@ -31,7 +31,7 @@ class HSTVSection {
      
      The convenience function += can also be used e.g. ```section+=row```
      */
-    func addRow(_ row: HSTVRowInfo) {
+    public func addRow(_ row: HSTVRowInfo) {
         row.section=self;
         row.table=table;
         rows.append(row)

@@ -12,7 +12,7 @@ import Foundation
 /// This is the top responder in the chain:
 /// HSTVRowInfo > HSTVSectionInfo > HSTVTableInfo
 /// Any properties from lower sections can be set here to provide defaults
-class HSTVTableInfo: HSTVSectionInfo {
+public class HSTVTableInfo: HSTVSectionInfo {
     
     init(table: HSTableView) {
         super.init(table:table, section:nil)

@@ -15,7 +15,7 @@ extension HSTVRowInfo {
      The checkmark shows the value of the default (or the opposite if checkmarkShowsForFalse is true)
      The true and false subtitles give the user more info. (Note - if you set one of these, you must set both)
  */
-    func linkTo(userDefault:String, trueSubtitle: String?, falseSubtitle: String?, checkmarkShowsForFalse: Bool = false){
+    public func linkTo(userDefault:String, trueSubtitle: String?, falseSubtitle: String?, checkmarkShowsForFalse: Bool = false){
         
         assert( (trueSubtitle != nil && falseSubtitle != nil) || (trueSubtitle == nil && falseSubtitle == nil),"If you provide a trueSubtitle, or falseSubtitle, you must provide both")
         
@@ -59,7 +59,7 @@ extension HSTVRowInfo {
     /// You can use this as 'row.deleteHandler=row.simpleDeleteHandler'
     ///
     /// - Parameter row: the row
-    func simpleDeleteHandler(_ row: HSTVRowInfo) {
+    public func simpleDeleteHandler(_ row: HSTVRowInfo) {
         row.table!.delete(row)
     }
 }
