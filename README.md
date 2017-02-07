@@ -1,6 +1,6 @@
 # HSTableView
 
-A better UITableView. Rows are managed by objects. Things happen with blocks.
+A simpler, more elegant UITableView. Rows are managed by objects. Things happen with blocks.
 
 Your whole table is declared up front with no delegates.
 
@@ -8,12 +8,12 @@ The table view uses a responder chain approach to provide settings. Any setting 
 
 This allows simple configuration at the table level, and easy customisation at the row level.
 
-Blocks are used for tap handlers, delete handlers, etc.
+Blocks are used for tap handlers, delete handlers, styling, etc.
 
 Default (coloured) accessories are supported
 
 HSTableView is suitable for situations where there is a known finite number of rows (although the number can change).
-It doesn’t support infinite scrolling tables (you’ll have to use delegates for that).
+It doesn’t support infinite scrolling tables (you’ll have to use UITableView and delegates for that!).
 
 ##Installation
 

@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.name         = "HSTableView"
   s.version      = "0.1.0"
-  s.summary      = "A better HSTableView using objects, blocks and no delegates"
+  s.summary      = "A simpler, more elegant UITableView using objects, blocks and no delegates"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,7 +25,9 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
-  A better UITableView. Rows are managed by objects. Things happen with blocks. Your whole table is declared up front with no need for delegates
+A simpler, more elegant UITableView. Rows are managed by objects. Things happen with blocks.
+
+Your whole table is declared up front with no need for delegates
 
 The table view uses a responder chain approach to provide settings. Any setting can be set at the row level, the section level or the table level.
 
@@ -35,7 +37,7 @@ Blocks are used for tap handlers, delete handlers, etc.
 
 Default (coloured) accessories are supported
 
-HSTableView is suitable for situations where there is a known finite number of rows (although the number can change). It doesn’t support infinite scrolling tables (you’ll have to use delegates for that).
+HSTableView is suitable for situations where there is a known finite number of rows (although the number can change). It doesn’t support infinite scrolling tables (you’ll have to use UITableView and delegates for that!)
                    DESC
 
   s.homepage     = "https://github.com/ConfusedVorlon/HSTableView"
