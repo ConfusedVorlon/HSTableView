@@ -25,7 +25,7 @@ Use [CocoaPods](https://github.com/cocoapods/cocoapods)
 
 ```Ruby
 pod 'HSTableView'
-
+```
 
 ##Simple Example
 
