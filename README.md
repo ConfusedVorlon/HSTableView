@@ -27,9 +27,45 @@ Use [CocoaPods](https://github.com/cocoapods/cocoapods)
 pod 'HSTableView'
 
 
-##Demo
+##Simple Example
 
-![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/demo.png)
+A simple table with three rows and click handlers for each:
+
+![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/simpleDemo.png)
+
+this function completely defines the example table
+
+```swift
+    
+    func populateTable()
+    {
+        table.startDataUpdate()
+        
+        self.table.addSection()
+        table.info.accessoryType = .disclosureIndicator
+
+        table += HSTVRowInfo(title:"Randoms") {
+            (rowInfo) in
+            print("Clicked on row 1")
+        }
+        
+        table += HSTVRowInfo(title:"Blocks (first half)") {
+            (rowInfo) in
+            print("Clicked on row 2")
+        }
+
+        table += HSTVRowInfo(title:"Blocks (second half)") {
+            (rowInfo) in
+            print("Clicked on row 3")
+        }
+        
+        self.table.applyDataUpdate()
+    }
+```
+
+##Detailed Demo
+
+![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/complexDemo.png)
 
 this function completely defines the example table
 

@@ -67,11 +67,13 @@ public class HSTVRowInfo: Equatable {
     public var estimatedRowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension. Returns rowHeight if that is set.
     
     
-    public convenience init (title: String?, subtitle: String? = nil)
+    public convenience init (title: String?, subtitle: String? = nil, selectionStyle:UITableViewCellSelectionStyle? = nil, clickHandler:HSClickHandler? = nil)
     {
         self.init()
-        self.title=title
-        self.subtitle=subtitle
+        self.title = title
+        self.subtitle = subtitle
+        self.selectionStyle = selectionStyle
+        self.clickHandler = clickHandler
     }
     
     func nextResponder() -> HSTVRowInfo? {

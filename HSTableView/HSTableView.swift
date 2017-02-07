@@ -109,7 +109,7 @@ public class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate
     ///
     /// - Parameter title: the title
     /// - Returns: the section
-    @discardableResult public func addSection(_ title: String?) -> HSTVSection{
+    @discardableResult public func addSection(_ title: String? = nil) -> HSTVSection{
         let newSection=HSTVSection(table: self);
         newSection.info.title = title
         
