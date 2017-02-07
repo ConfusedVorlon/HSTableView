@@ -15,6 +15,17 @@ Default (coloured) accessories are supported
 HSTableView is suitable for situations where there is a known finite number of rows (although the number can change).
 It doesn’t support infinite scrolling tables (you’ll have to use delegates for that).
 
+##Installation
+
+use cocoa pods:
+
+
+Use [CocoaPods](https://github.com/cocoapods/cocoapods)
+
+
+```Ruby
+pod 'HSTableView'
+
 
 ##Demo
 
