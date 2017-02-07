@@ -22,7 +22,7 @@ class MyTableViewCell: UITableViewCell {
 
         //self.textLabel?.hidden=true
 
-        self.contentView.backgroundColor=UIColor.redColor()
+        self.contentView.backgroundColor=UIColor.red
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -45,7 +45,7 @@ class MyTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// HSTVSection holds an array of HSTVRows
 class HSTVSection {
     var rows:[HSTVRowInfo]=[HSTVRowInfo]()
     
@@ -25,18 +26,16 @@ class HSTVSection {
         self.sectionInfo=HSTVSectionInfo(table:table, section: self)
     }
     
-    func addRow(row: HSTVRowInfo) {
+    func addRow(_ row: HSTVRowInfo) {
         row.section=self;
         row.table=table;
         rows.append(row)
-        
-        row.nextResponder()
     }
     
-    func removeRow(row: HSTVRowInfo)
+    func removeRow(_ row: HSTVRowInfo)
     {
-        if let index = rows.indexOf(row) {
-            rows.removeAtIndex(index)
+        if let index = rows.index(of: row) {
+            rows.remove(at: index)
         }
     }
     

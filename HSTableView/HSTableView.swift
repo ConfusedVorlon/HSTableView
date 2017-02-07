@@ -8,14 +8,16 @@
 
 import UIKit
 
+/// Table view holds an array of sections. 
+/// Changes are made to pending sections, then swapped in on the main thread (with startDataUpdate / ApplyDataUpdate)
 class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
-    private var sections:[HSTVSection]=[HSTVSection]()
-    private var pendingSections:[HSTVSection]?
+    fileprivate var sections:[HSTVSection]=[HSTVSection]()
+    fileprivate var pendingSections:[HSTVSection]?
     
-    enum HSTableViewError: ErrorType {
-        case RowDoesNotExist(indexPath:NSIndexPath)
-        case SectionDoesNotExist(indexPath:NSIndexPath)
+    enum HSTableViewError: Error {
+        case rowDoesNotExist(indexPath:IndexPath)
+        case sectionDoesNotExist(indexPath:IndexPath)
     }
     
     var tableInfo:HSTVTableInfo! {
@@ -58,14 +60,14 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
     func applyDataUpdate() -> Void {
         precondition(pendingSections != nil, "You can't apply an update withough starting one!")
         
-        if NSThread.isMainThread()
+        if Thread.isMainThread
         {
             self.sections=self.pendingSections!
             self.reloadData()
         }
         else
         {
-            dispatch_async(dispatch_get_main_queue(), { 
+            DispatchQueue.main.async(execute: { 
                 self.sections=self.pendingSections!
                 self.reloadData()
             })
@@ -80,7 +82,7 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
 
      The convenience function += can also be used e.g. ```table+=row```
  */
-    func addRow(row: HSTVRowInfo) -> HSTVRowInfo {
+    @discardableResult func addRow(_ row: HSTVRowInfo) -> HSTVRowInfo {
         precondition(pendingSections != nil, "Call startDataUpdate before using add row.")
         
         precondition(pendingSections!.last != nil, "Add a section before adding a row")
@@ -93,7 +95,7 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
      Adds a section to the pending data update
      Call startDataUpdate before using, and applyDataUpdate to apply it.
  */
-    func addSection(section: HSTVSection) -> HSTVSection{
+    @discardableResult func addSection(_ section: HSTVSection) -> HSTVSection{
         precondition(pendingSections != nil, "Call startDataUpdate before using add section.")
         
         pendingSections!.append(section)
@@ -101,7 +103,11 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
         return section;
     }
     
-    func addSection(title: String?) -> HSTVSection{
+    /// Add a simple section with just a title
+    ///
+    /// - Parameter title: the title
+    /// - Returns: the section
+    @discardableResult func addSection(_ title: String?) -> HSTVSection{
         let newSection=HSTVSection(table: self);
         newSection.sectionInfo.title = title
         
@@ -109,16 +115,16 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
     }
     
     
-    func rowInfoFor(indexPath:NSIndexPath) throws -> HSTVRowInfo {
+    func rowInfoFor(_ indexPath:IndexPath) throws -> HSTVRowInfo {
         
         guard (indexPath.section<sections.count) else {
-            throw HSTableViewError.SectionDoesNotExist(indexPath: indexPath)
+            throw HSTableViewError.sectionDoesNotExist(indexPath: indexPath)
         }
         
         let section = sections[indexPath.section]
 
         guard (indexPath.row<section.rows.count) else {
-            throw HSTableViewError.RowDoesNotExist(indexPath: indexPath)
+            throw HSTableViewError.rowDoesNotExist(indexPath: indexPath)
         }
 
         let rowInfo=section.rows[indexPath.row];
@@ -127,10 +133,10 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
         return rowInfo
     }
     
-    func sectionInfoFor(section: Int) throws -> HSTVSectionInfo {
+    func sectionInfoFor(_ section: Int) throws -> HSTVSectionInfo {
         
         guard (section<sections.count) else {
-            throw HSTableViewError.SectionDoesNotExist(indexPath: NSIndexPath.init(forRow: -1, inSection: section))
+            throw HSTableViewError.sectionDoesNotExist(indexPath: IndexPath.init(row: -1, section: section))
         }
         
         let section = sections[section]
@@ -138,68 +144,68 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
         return section.sectionInfo
     }
     
-    func delete(row: HSTVRowInfo)
+    func delete(_ row: HSTVRowInfo)
     {
         row.section?.removeRow(row)
         let deleteArray=[row.lastIndexPath!]
-        self.deleteRowsAtIndexPaths(deleteArray,withRowAnimation:UITableViewRowAnimation.Automatic)
+        self.deleteRows(at: deleteArray as [IndexPath],with:UITableViewRowAnimation.automatic)
     }
     
     // MARK: UITableViewDataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int{
+    func numberOfSections(in tableView: UITableView) -> Int{
         return sections.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let ri = try! self.rowInfoFor(indexPath)
         return ri.cell()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections[section].rows.count
     }
     
     
     // MARK UITableViewDelegate
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
         let ri = try! self.rowInfoFor(indexPath)
         ri.tableView(willDisplayCell: cell, forRowAtIndexPath: indexPath)
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let ri = try! self.rowInfoFor(indexPath)
         ri.tableViewDidSelectRow()
     }
     
-    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath)
+    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath)
     {
         let ri = try! self.rowInfoFor(indexPath)
         ri.tableViewAccessoryButtonTapped()
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         let ri = try! self.rowInfoFor(indexPath)
         return ri.tableViewEstimatedHeightForRow();
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         let ri = try! self.rowInfoFor(indexPath)
         return ri.tableViewHeightForRow();
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
         let si = try! self.sectionInfoFor(section)
         return si.tableViewHeightForHeaderInSection()
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
         let si = try! self.sectionInfoFor(section)
         return si.viewForHeaderInSection()
@@ -207,31 +213,31 @@ class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITab
     
     //MARK UITableViewDelegate Editing
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 
         let ri = try! self.rowInfoFor(indexPath)
-        return (ri.inheritedEditingStyle == .Delete)
+        return (ri.inheritedEditingStyle == .delete)
     }
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         let ri = try! self.rowInfoFor(indexPath)
         return ri.inheritedEditingStyle
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (editingStyle==UITableViewCellEditingStyle.Delete)
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle==UITableViewCellEditingStyle.delete)
         {
             let ri = try! self.rowInfoFor(indexPath)
             ri.tableViewDidDeleteRow()
         }
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         return nil
     }
 }
 
-func +=(left: HSTableView, right: HSTVRowInfo) -> HSTableView {
+@discardableResult func +=(left: HSTableView, right: HSTVRowInfo) -> HSTableView {
     left.addRow(right)
     return left
 }

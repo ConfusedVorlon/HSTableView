@@ -18,7 +18,7 @@ func == (lhs: HSTVRowInfo, rhs: HSTVRowInfo) -> Bool {
 class HSTVRowInfo: Equatable {
     weak var section: HSTVSection?
     weak var table: HSTableView!
-    var lastIndexPath: NSIndexPath!
+    var lastIndexPath: IndexPath!
     
     var style:UITableViewCellStyle? // Defaults to .Subtitle
     var nib:UINib?
@@ -85,21 +85,20 @@ class HSTVRowInfo: Equatable {
         return next
     }
     
-    func makeNewCell(identifier: String, inheritedStyle: UITableViewCellStyle) -> UITableViewCell
+    func makeNewCell(_ identifier: String, inheritedStyle: UITableViewCellStyle) -> UITableViewCell
     {
         return UITableViewCell(style: inheritedStyle , reuseIdentifier: identifier)
     }
     
-    private lazy var cellIdentifier : String = {
-        let theStyle = self.inheritedStyle ?? .Subtitle
+    fileprivate lazy var cellIdentifier : String = {
+        let theStyle = self.inheritedStyle
         
-        let identifier:String="\(theStyle)_\(self)_\(self.inheritedNib ?? "")_\(self.inheritedReuseIdentifier ?? "")_\(self.inheritedTintChevronDisclosures ?? false)"
-
-        
+        let identifier:String="\(theStyle)_\(self)_\(self.inheritedNib)_\(self.inheritedReuseIdentifier)_\(self.inheritedTintChevronDisclosures ?? false)"
+    
         return identifier
     }()
     
-    private var nibRegistrationTried : Bool = false
+    fileprivate var nibRegistrationTried : Bool = false
     
     func cell() -> UITableViewCell
     {
@@ -110,11 +109,11 @@ class HSTVRowInfo: Equatable {
             if let nib = self.inheritedNib {
                 //This will register once per row, rather than once per nib-type
                 //Slightly inefficient, but probably not problematic
-                self.table.registerNib(nib,forCellReuseIdentifier:self.cellIdentifier)
+                self.table.register(nib,forCellReuseIdentifier:self.cellIdentifier)
             }
         }
         
-        let oldCell: UITableViewCell? = table.dequeueReusableCellWithIdentifier(cellIdentifier)
+        let oldCell: UITableViewCell? = table.dequeueReusableCell(withIdentifier: cellIdentifier)
         
         let cell = oldCell ?? makeNewCell(cellIdentifier, inheritedStyle: self.inheritedStyle)
         
@@ -123,7 +122,7 @@ class HSTVRowInfo: Equatable {
         return cell
     }
     
-    func doInitialConfigurationFor(cell: UITableViewCell)
+    func doInitialConfigurationFor(_ cell: UITableViewCell)
     {
         cell.textLabel?.text = inheritedTitle()
         cell.textLabel?.textColor = inheritedTitleColor()
@@ -135,7 +134,7 @@ class HSTVRowInfo: Equatable {
             var image = UIImage.init(named: imageName)
             if let imageColour = inheritedLeftImageColor
             {
-                image = image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                image = image?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
                 cell.imageView?.tintColor=imageColour
             }
             cell.imageView?.image=image
@@ -163,13 +162,13 @@ class HSTVRowInfo: Equatable {
         
     }
     
-    func redrawCell(withRowAnimation: UITableViewRowAnimation) -> Void {
-        table.reloadRowsAtIndexPaths([self.lastIndexPath], withRowAnimation: withRowAnimation)
+    func redrawCell(_ withRowAnimation: UITableViewRowAnimation) -> Void {
+        table.reloadRows(at: [self.lastIndexPath], with: withRowAnimation)
     }
     
     //MARK: inheritors
     
-    internal func inherited<T>(getResult: (HSTVRowInfo?) -> T? ) -> T? {
+    internal func inherited<T>(_ getResult: (HSTVRowInfo?) -> T? ) -> T? {
         var responder : HSTVRowInfo? = self
         var theResult : T? = nil
         
@@ -180,45 +179,15 @@ class HSTVRowInfo: Equatable {
         
         return theResult
     }
-    
-//    internal func inherited2<T>(getResult: (HSTVRowInfo?) -> T? ) -> T? {
-  //      return inherited({ )
 
-    //}
- 
-    
- 
-//    private func inherited2<T>(getResult: (HSTVRowInfo?) -> T? ) -> T? {
-//        var responder : HSTVRowInfo? = self
-//        var theSubtitle : T? = nil
-//        
-//        repeat {
-//            theSubtitle=getResult(responder)
-//            print("check: \(responder) get \(theSubtitle)")
-//            
-//            responder=responder?.nextResponder()
-//            
-//        } while (theSubtitle == nil && responder != nil)
-//        
-//        print ("return \(theSubtitle)")
-//        
-//        return theSubtitle
-//    }
-    
+
     
     //two things here;
     //1) trailing closure param doesn't need ()
     //2) for sinvle argument closure, you don't need to give the boilerplate, and can refer to first input argument with $0
     internal func inheritedTitle() -> String? { return inherited { $0?.title } }
 
-//    internal func inheritedTitle() -> String? {
-//        return inherited({ row -> String? in
-//            return row?.title
-//        })
-//    }
-    
     internal func inheritedSubtitle() -> String? { return inherited { $0?.subtitle } }
-
     
     internal func inheritedTitleColor() -> UIColor? { return inherited{ $0?.titleColor } }
     
@@ -234,23 +203,23 @@ class HSTVRowInfo: Equatable {
     
     internal lazy var inheritedSelectionStyle : UITableViewCellSelectionStyle = {
         let style = self.inherited { $0?.selectionStyle }
-        return style ?? .Default
+        return style ?? .default
     }()
     
     internal lazy var inheritedEditingStyle : UITableViewCellEditingStyle = {
         let style = self.inherited { $0?.editingStyle }
-        return style ?? .None
+        return style ?? .none
     }()
     
     
     internal func inheritedAccessoryType() -> UITableViewCellAccessoryType {
         let style = inherited{ $0?.accessoryType }
-        return style ?? .None
+        return style ?? .none
     }
     
     internal lazy var inheritedStyle: UITableViewCellStyle = {
         let style = self.inherited { $0?.style }
-        return style ?? .Subtitle
+        return style ?? .subtitle
     }()
     
     internal lazy var inheritedReuseIdentifier : String? = {
@@ -329,18 +298,18 @@ class HSTVRowInfo: Equatable {
     
     //MARK: UITableView related delegate methods
     
-    func tableView(willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath)
     {
         if inheritedTintChevronDisclosures == true {
             for case let button as UIButton in cell.subviews {
-                let image = button.backgroundImageForState(.Normal)?.imageWithRenderingMode(.AlwaysTemplate)
-                button.setBackgroundImage(image, forState: .Normal)
+                let image = button.backgroundImage(for: UIControlState())?.withRenderingMode(.alwaysTemplate)
+                button.setBackgroundImage(image, for: UIControlState())
             }
             
             for disclosure in cell.subviews {
-                if (NSStringFromClass(disclosure.dynamicType) == "UITableViewCellDetailDisclosureView") {
+                if (NSStringFromClass(type(of: disclosure)) == "UITableViewCellDetailDisclosureView") {
                     for case let imageView as UIImageView in disclosure.subviews {
-                        let image = imageView.image?.imageWithRenderingMode(.AlwaysTemplate)
+                        let image = imageView.image?.withRenderingMode(.alwaysTemplate)
                         imageView.image = image
                     }
                 }
@@ -372,7 +341,7 @@ class HSTVRowInfo: Equatable {
         
         if (self.inheritedAutoDeselect())
         {
-            self.table.deselectRowAtIndexPath(self.lastIndexPath, animated: true)
+            self.table.deselectRow(at: self.lastIndexPath, animated: true)
         }
     }
     

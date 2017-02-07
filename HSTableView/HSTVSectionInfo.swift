@@ -29,8 +29,8 @@ class HSTVSectionInfo: HSTVRowInfo {
         {
             let label=UILabel.init()
             label.text=title
-            label.textAlignment=NSTextAlignment.Center
-            label.backgroundColor=UIColor.lightGrayColor()
+            label.textAlignment=NSTextAlignment.center
+            label.backgroundColor=UIColor.lightGray
 
             return label
         }
