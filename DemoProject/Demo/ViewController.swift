@@ -39,7 +39,8 @@ class ViewController: UIViewController {
         table.info.subtitleColor = UIColor.lightGray
         table.info.subtitle="Table default subtitle"
         table.info.clickHandler = {row in
-            print("Table handler click handler, \(row.lastIndexPath.section),\(row.lastIndexPath.row)")
+            //Default click handler prints the index path, updates the subtitle and redraws the row
+            print("Table handler click: \(row.lastIndexPath)")
             row.subtitle="clicked at \(Date.init())"
             row.redrawCell(UITableViewRowAnimation.fade)
         };
@@ -86,12 +87,12 @@ class ViewController: UIViewController {
         //Row value is linked to the user default 'TestDefault'
         self.table.addSection("Linked to default")
         row = HSTVRowInfo(title: "Linked to UserDefault 'TestDefault'")
-        row.linkTo("TestDefault", trueSubtitle: "TestDefault is true", falseSubtitle: "TestDefault is false")
+        row.linkTo(userDefault:"TestDefault", trueSubtitle: "TestDefault is true", falseSubtitle: "TestDefault is false")
         table += row
         
         //Row value is linked to the user default 'TestDefault', but checkmark shows when value is false
         row = HSTVRowInfo(title: "Linked to UserDefault TestOppositeDefault")
-        row.linkTo("TestOppositeDefault", trueSubtitle: "TestDefault is true", falseSubtitle: "TestDefault is false", checkmarkShowsForFalse: true)
+        row.linkTo(userDefault:"TestOppositeDefault", trueSubtitle: "TestDefault is true", falseSubtitle: "TestDefault is false", checkmarkShowsForFalse: true)
         table += row
         
         //Various accessory views
@@ -99,7 +100,7 @@ class ViewController: UIViewController {
         section.info.subtitle=""
         
         row = HSTVRowInfo(title:"Chevron")
-        row.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        row.accessoryType = .disclosureIndicator
         row.leftImageName="04-squiggle"
         row.tintColor=UIColor.orange
         row.tintChevronDisclosures = true
@@ -107,13 +108,13 @@ class ViewController: UIViewController {
         
         
         row = HSTVRowInfo(title:"Chevron")
-        row.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        row.accessoryType = .disclosureIndicator
         row.tintColor=UIColor.orange
         table += row
         
         
         row = HSTVRowInfo(title:"Disclosure")
-        row.accessoryType = UITableViewCellAccessoryType.detailDisclosureButton
+        row.accessoryType = .detailDisclosureButton
         row.leftImageName="04-squiggle"
         row.leftImageColor=UIColor.purple
         row.tintColor=UIColor.orange
@@ -125,11 +126,11 @@ class ViewController: UIViewController {
         table += row
         
         row = HSTVRowInfo(title:"Checkmark")
-        row.accessoryType = UITableViewCellAccessoryType.checkmark
+        row.accessoryType = .checkmark
         table += row
         
         row = HSTVRowInfo(title:"Info")
-        row.accessoryType = UITableViewCellAccessoryType.detailButton
+        row.accessoryType = .detailButton
         row.accessoryClickHandler = {
             row in
             print ("Info accessory clicked")

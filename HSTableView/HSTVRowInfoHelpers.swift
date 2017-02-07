@@ -15,20 +15,20 @@ extension HSTVRowInfo {
      The checkmark shows the value of the default (or the opposite if checkmarkShowsForFalse is true)
      The true and false subtitles give the user more info. (Note - if you set one of these, you must set both)
  */
-    func linkTo(_ defaultName: String, trueSubtitle: String?, falseSubtitle: String?, checkmarkShowsForFalse: Bool = false){
+    func linkTo(userDefault:String, trueSubtitle: String?, falseSubtitle: String?, checkmarkShowsForFalse: Bool = false){
         
         assert( (trueSubtitle != nil && falseSubtitle != nil) || (trueSubtitle == nil && falseSubtitle == nil),"If you provide a trueSubtitle, or falseSubtitle, you must provide both")
         
         self.clickHandler = {
             (row) in
-            let currentValue=UserDefaults.standard.bool(forKey: defaultName)
-            UserDefaults.standard.set(!currentValue, forKey: defaultName)
+            let currentValue=UserDefaults.standard.bool(forKey: userDefault)
+            UserDefaults.standard.set(!currentValue, forKey: userDefault)
             row.redrawCell(UITableViewRowAnimation.fade)
         };
         
         self.styleBeforeDisplayHandler = {
             (row,cell) in
-            let value=UserDefaults.standard.bool(forKey: defaultName)
+            let value=UserDefaults.standard.bool(forKey: userDefault)
             var checkmarkValue = value
             if checkmarkShowsForFalse {
                 checkmarkValue = !value
