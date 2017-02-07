@@ -17,6 +17,8 @@ It doesn’t support infinite scrolling tables (you’ll have to use delegates f
 
 ##Demo
 
+![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/demo.png)
+
 this function completely defines the example table
 
 ```swift
@@ -139,14 +141,14 @@ this function completely defines the example table
             {
                 row.subtitle="subtitle"
             }
-            self.table.addRow(row)
+            table += row
         }
         
         //Nil title for section makes the header invisibile
         section=self.table.addSection(nil)
         for i in 1...2 {
             let row=HSTVRowInfo(title:"Section with no header \(i)")
-            self.table.addRow(row)
+            table += row
         }
         
         //style after create handler in this section customises the row in code
