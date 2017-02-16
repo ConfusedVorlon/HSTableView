@@ -17,9 +17,9 @@ extension HSTVRowInfo {
      The get and set functions let you deal with the result
      The true and false subtitles give the user more info. (Note - if you set one of these, you must set both)
      */
-    public func handleCheckmark(checkedSubtitle: String?, uncheckedSubtitle: String?, get:@escaping () -> Bool, set:@escaping (Bool) -> Void){
+    public func handleCheckmark(checkedSubtitle: String? = nil, uncheckedSubtitle: String? = nil, get:@escaping () -> Bool, set:@escaping (Bool) -> Void){
         
-        assert( (checkedSubtitle != nil && uncheckedSubtitle != nil) || (checkedSubtitle == nil && uncheckedSubtitle == nil),"If you provide a trueSubtitle, or falseSubtitle, you must provide both")
+        assert( (checkedSubtitle == nil) == (uncheckedSubtitle == nil),"If you provide a trueSubtitle, or falseSubtitle, you must provide both")
         
         self.clickHandler = {
             (row) in
