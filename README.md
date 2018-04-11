@@ -15,7 +15,7 @@ Default (coloured) accessories are supported
 HSTableView is suitable for situations where there is a known finite number of rows (although the number can change).
 It doesn’t support infinite scrolling tables (you’ll have to use UITableView and delegates for that!).
 
-##Installation
+## Installation
 
 use cocoa pods:
 
@@ -27,7 +27,7 @@ Use [CocoaPods](https://github.com/cocoapods/cocoapods)
 pod 'HSTableView'
 ```
 
-##Simple Example
+## Simple Example
 
 A simple table with three rows and click handlers for each:
 
@@ -63,7 +63,7 @@ A simple table with three rows and click handlers for each:
 ![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/simpleDemo.png)
 
 
-##Detailed Demo
+## Detailed Demo
 
 ![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/complexDemo.png)
 
