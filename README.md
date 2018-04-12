@@ -32,11 +32,11 @@ pod 'HSTableView'
 A simple table with three rows and click handlers for each:
 
 ```swift
-    
+
     func populateTable()
     {
         table.startDataUpdate()
-        
+
         self.table.addSection()
         //All the rows have the same accessory type, so define it at the table level
         table.info.accessoryType = .disclosureIndicator
@@ -45,7 +45,7 @@ A simple table with three rows and click handlers for each:
             (rowInfo) in
             print("Clicked on row 1")
         }
-        
+
         table += HSTVRowInfo(title:"Blocks (first half)") {
             (rowInfo) in
             print("Clicked on row 2")
@@ -55,13 +55,83 @@ A simple table with three rows and click handlers for each:
             (rowInfo) in
             print("Clicked on row 3")
         }
-        
+
         self.table.applyDataUpdate()
     }
 ```
 
 ![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/simpleDemo.png)
 
+## Customising with inheritance
+
+Each cell is handled using the responder chain
+
+HSTVRowInfo -> HSTVSectionInfo -> HSTVTableInfo
+
+so, for example to get the colour of the title, for a row, the table first checks whether titleColor is set on the HSTVRowInfo. If that is null, it checks the HSTVSectionInfo, and if that is null, it checks HSTVTable info
+
+This means that for things which apply to your whole table or section, you can set them once at the top level - and can still override specific values on a per-row level.
+
+## Custom display logic
+
+You can customise display with the standard setters (title, subtitle, style, etc)
+
+```swift
+
+    var row = HSTVRowInfo(title:"MyTitle", subtitle:"My Subtitle")
+    row.titleColor = .red
+    row.leftImageName = "MyImageName"
+
+    table += row
+```
+
+ or using the afterCreate or beforeDisplay handlers
+
+ ```swift
+
+    var row = HSTVRowInfo(title:"MyTitle", subtitle:"My Subtitle")
+    row.styleAfterCreateHandler = {
+        row,cell in
+
+        cell.myCustomLabel.text = "TextForCustomLabel"
+    }
+
+    table += row
+```
+
+note - if you're doing the same customisation for multiple cells - you can use a handler at the table or section level and access the info you need from the customInfo property
+
+ ```swift
+
+    table.info.styleAfterCreateHandler = {
+        row,cell in
+
+        cell.myCustomLabel.text = row.customInfo!.customLabelText
+    }
+
+```
+
+## Custom cells
+
+1. You can use the standard cell formats by setting HSTVRowInfo.style
+1. You can specify a custom nib with HSTVRowInfo.nib
+1. You can create a custom cell by subclassing HSTVRowInfo and overriding 
+
+	`func makeNewCell(_ identifier: String, inheritedStyle: UITableViewCellStyle) -> UITableViewCell`
+
+
+## Simple settings handling (for settings tables)
+
+I often use tables for true/false settings in my app.
+there is a custom handler which can show/hide a checkmark and update a boolean UserDefault when the user taps on the row
+
+```swift
+
+	row.handleCheckmark(userDefault:"TestDefault",
+                            checkedSubtitle: "Checked (user default true)",
+                            uncheckedSubtitle: "UnChecked (user default false)")
+
+```
 
 ## Detailed Demo
 
@@ -70,7 +140,7 @@ A simple table with three rows and click handlers for each:
 this function completely defines the example table
 
 ```swift
-    
+
     func populateTable()
     {
         table.startDataUpdate()
@@ -85,13 +155,13 @@ this function completely defines the example table
             row.subtitle="clicked at \(Date.init())"
             row.redrawCell(UITableViewRowAnimation.fade)
         };
-        
+
         // Add a section with a simple title
         var section=self.table.addSection("Regular cells")
         // Provide some defaults for items in this section
         section.info.titleColor=UIColor.blue
         section.info.subtitleColor=UIColor.orange
-        
+
         //First row shows a simple click handler that reloads the table data
         var row=HSTVRowInfo(title:"Reload Table",subtitle: "Number of rows in first section is somewhat random")
         row.leftImageName="713-refresh-1"
@@ -100,7 +170,7 @@ this function completely defines the example table
             self.populateTable()
         };
         table += row
-        
+
         let numberOfRandoms=arc4random_uniform(6)
         //Random number of rows with the title 'Section One'
         //Odd rows get their subtitle from the table
@@ -116,15 +186,15 @@ this function completely defines the example table
             }
             table += row
         }
-  
-        
+
+
         // Simple swipe to delete row
         self.table.addSection("Editable")
         row = HSTVRowInfo(title: "Swipe to delete")
         row.editingStyle=UITableViewCellEditingStyle.delete
         row.deleteHandler=row.simpleDeleteHandler
         table += row
-        
+
         //Row value is linked to the user default 'TestDefault'
         self.table.addSection("Linked to default")
         row = HSTVRowInfo(title: "Linked to UserDefault 'TestDefault'")
@@ -132,7 +202,7 @@ this function completely defines the example table
                             checkedSubtitle: "Checked (user default true)",
                             uncheckedSubtitle: "UnChecked (user default false)")
         table += row
-        
+
         //Row value is linked to the user default 'TestDefault', but checkmark shows when value is false
         row = HSTVRowInfo(title: "Linked to UserDefault 'TestOppositeDefault'")
         row.handleCheckmark(userDefault:"TestOppositeDefault",
@@ -140,25 +210,25 @@ this function completely defines the example table
                             uncheckedSubtitle: "UnChecked (user default true)",
                             checkmarkShowsForFalse: true)
         table += row
-        
+
         //Various accessory views
         section=self.table.addSection("Accessory views")
         section.info.subtitle=""
-        
+
         row = HSTVRowInfo(title:"Chevron")
         row.accessoryType = .disclosureIndicator
         row.leftImageName="04-squiggle"
         row.tintColor=UIColor.orange
         row.tintChevronDisclosures = true
         table += row
-        
-        
+
+
         row = HSTVRowInfo(title:"Chevron")
         row.accessoryType = .disclosureIndicator
         row.tintColor=UIColor.orange
         table += row
-        
-        
+
+
         row = HSTVRowInfo(title:"Disclosure")
         row.accessoryType = .detailDisclosureButton
         row.leftImageName="04-squiggle"
@@ -170,11 +240,11 @@ this function completely defines the example table
             print ("Disclosure accessory clicked")
         }
         table += row
-        
+
         row = HSTVRowInfo(title:"Checkmark")
         row.accessoryType = .checkmark
         table += row
-        
+
         row = HSTVRowInfo(title:"Info")
         row.accessoryType = .detailButton
         row.accessoryClickHandler = {
@@ -182,14 +252,14 @@ this function completely defines the example table
             print ("Info accessory clicked")
         }
         table += row
-        
+
         //Row loaded from xib
         section = self.table.addSection("Custom Xib")
         section.info.subtitle="Section Override"
         let myNib = UINib(nibName: "MyTableViewCell", bundle: nil)
         section.info.nib=myNib
         section.info.estimatedRowHeight=150
-        
+
         for i in 1...2 {
             let row=HSTVRowInfo(title:"One: \(i)")
             if (i%2==0)
@@ -198,30 +268,30 @@ this function completely defines the example table
             }
             table += row
         }
-        
+
         //Nil title for section makes the header invisibile
         section=self.table.addSection(nil)
         for i in 1...2 {
             let row=HSTVRowInfo(title:"Section with no header \(i)")
             table += row
         }
-        
+
         //style after create handler in this section customises the row in code
         //setting a reuseIdentifier makes sure that this cell is not re-used elsewhere
         section.info.styleAfterCreateHandler = {
             row,cell in
-            
+
             //os caches imageNamed results
             var image=UIImage(named:"tableRowBackground.png")
             image=image?.stretchableImage(withLeftCapWidth: 30, topCapHeight: 2)
-            
+
             cell.backgroundView=UIImageView.init(image: image)
-            
+
             cell.textLabel?.textColor=UIColor.white
             cell.detailTextLabel?.textColor=UIColor.white
         }
         section.info.reuseIdentifier="orange"
-        
+
         self.table.applyDataUpdate()
     }
 ```

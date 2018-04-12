@@ -34,6 +34,7 @@ class ViewController: UIViewController {
     {
         table.startDataUpdate()
         table.allowsSelectionDuringEditing=true
+        
         // Provide defaults for all rows in the table
         // This will apply unless a value is set at a more specific level (section or row)
         table.info.subtitleColor = UIColor.lightGray
@@ -45,13 +46,16 @@ class ViewController: UIViewController {
             row.redrawCell(UITableViewRowAnimation.fade)
         };
         
+        // Section 1
         // Add a section with a simple title
+        //
         var section=self.table.addSection("Regular cells")
         // Provide some defaults for items in this section
         section.info.titleColor=UIColor.blue
         section.info.subtitleColor=UIColor.orange
         
-        //First row shows a simple click handler that reloads the table data
+        //First row has a simple click handler that reloads the table data
+        //The number or rows is random - so you can see the effect of the reload
         var row=HSTVRowInfo(title:"Reload Table",subtitle: "Number of rows in first section is somewhat random")
         row.leftImageName="713-refresh-1"
         row.clickHandler = {
@@ -76,15 +80,18 @@ class ViewController: UIViewController {
             table += row
         }
   
-        
+        // Section 2
         // Simple swipe to delete row
+        //
         self.table.addSection("Editable")
         row = HSTVRowInfo(title: "Swipe to delete")
         row.editingStyle=UITableViewCellEditingStyle.delete
         row.deleteHandler=row.simpleDeleteHandler
         table += row
         
-        //Row value is linked to the user default 'TestDefault'
+        // Section 3
+        // Row value is linked to the user default 'TestDefault'
+        //
         self.table.addSection("Linked to default")
         row = HSTVRowInfo(title: "Linked to UserDefault 'TestDefault'")
         row.handleCheckmark(userDefault:"TestDefault",
@@ -100,7 +107,9 @@ class ViewController: UIViewController {
                             checkmarkShowsForFalse: true)
         table += row
         
-        //Various accessory views
+        // Section 4
+        // Various accessory views
+        // (including coloured disclosure indicators)
         section=self.table.addSection("Accessory views")
         section.info.subtitle=""
         
@@ -142,7 +151,9 @@ class ViewController: UIViewController {
         }
         table += row
         
-        //Row loaded from xib
+        // Section 5
+        // Row loaded from custom xib
+        //
         section = self.table.addSection("Custom Xib")
         section.info.subtitle="Section Override"
         let myNib = UINib(nibName: "MyTableViewCell", bundle: nil)
@@ -158,7 +169,10 @@ class ViewController: UIViewController {
             table += row
         }
         
-        //Nil title for section makes the header invisibile
+        // Section 6
+        // Nil title for section makes the header invisibile
+        // styleAfterCreate handler used to set custom background and override label colours
+        //
         section=self.table.addSection(nil)
         for i in 1...2 {
             let row=HSTVRowInfo(title:"Section with no header \(i)")
