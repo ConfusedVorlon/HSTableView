@@ -133,6 +133,23 @@ there is a custom handler which can show/hide a checkmark and update a boolean U
 
 ```
 
+## Filtering
+
+You can use the filter option to animate the appearance & disappearance of cells in your table. 
+When a row is hidden, then it’s height is set to 0 so that it can be animated away.
+You should consider this when designing your cell - the animation will work much faster if the cell has a fixed-height view so that it doesn’t need to be re-drawn multiple times as the cell animates down.
+
+For example - to filter the table by title, based on the text in a search bar:
+
+ ```swift   
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        tableView.filter { (row) -> Bool in
+            return row.title?.contains(string: searchText) ?? false
+        }
+    }
+```
+
 ## Detailed Demo
 
 ![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/complexDemo.png)
