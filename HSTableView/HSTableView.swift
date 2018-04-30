@@ -10,9 +10,8 @@ import UIKit
 
 /// Table view holds an array of sections. 
 /// Changes are made to pending sections, then swapped in on the main thread (with startDataUpdate / ApplyDataUpdate)
-public class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
-
-    fileprivate var sections:[HSTVSection]=[HSTVSection]()
+open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
+    public var sections:[HSTVSection]=[HSTVSection]()
     fileprivate var pendingSections:[HSTVSection]?
     
     enum HSTableViewError: Error {
@@ -59,13 +58,13 @@ public class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate
      In future ths will sensibly add/remove rows based on changes relative to the existing data
      Calls Reload data
  */
-    public func applyDataUpdate() -> Void {
+    public func applyDataUpdate(animated:Bool = false) -> Void {
         precondition(pendingSections != nil, "You can't apply an update withough starting one!")
         
         if Thread.isMainThread
         {
             self.sections=self.pendingSections!
-            self.reloadData()
+            self.updateData(animated: animated)
         }
         else
         {
@@ -74,8 +73,10 @@ public class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate
                 self.reloadData()
             })
         }
-        
-        
+    }
+    
+    private func updateData(animated:Bool) {
+        self.reloadData()
     }
     
     /**
@@ -153,6 +154,19 @@ public class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate
         self.deleteRows(at: deleteArray as [IndexPath],with:UITableViewRowAnimation.automatic)
     }
     
+    // filter function should return true to show row, false to hide it
+    public func filter(showRowFunction : HSCellFilter)
+    {
+        for section in sections {
+            for row in section.rows {
+                row.hidden = !showRowFunction(row)
+            }
+        }
+        
+        self.beginUpdates()
+        self.endUpdates()
+    }
+    
     // MARK: UITableViewDataSource
     
     public func numberOfSections(in tableView: UITableView) -> Int{
@@ -192,6 +206,9 @@ public class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate
     
     public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         let ri = try! self.infoFor(indexPath)
+        if ri.inheritedHidden() == true {
+            return 0
+        }
         return ri.tableViewEstimatedHeightForRow();
     }
     

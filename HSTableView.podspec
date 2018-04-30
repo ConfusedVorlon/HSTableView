@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "HSTableView"
-  s.version      = "0.1.0"
+  s.version      = "1.0"
   s.summary      = "A simpler, more elegant UITableView using objects, blocks and no delegates"
 
   # This description is used to generate tags and improve search results.
@@ -29,13 +29,13 @@ A simpler, more elegant UITableView. Rows are managed by objects. Things happen 
 
 Your whole table is declared up front with no need for delegates
 
-The table view uses a responder chain approach to provide settings. Any setting can be set at the row level, the section level or the table level.
+The table view uses a responder chain to provide settings. Any setting can be set at the row level, the section level or the table level.
 
 This allows simple configuration at the table level, and easy customisation at the row level.
 
 Blocks are used for tap handlers, delete handlers, etc.
 
-Default (coloured) accessories are supported
+Default (and coloured) accessories are supported
 
 HSTableView is suitable for situations where there is a known finite number of rows (although the number can change). It doesn’t support infinite scrolling tables (you’ll have to use UITableView and delegates for that!)
                    DESC
@@ -65,7 +65,7 @@ HSTableView is suitable for situations where there is a known finite number of r
   #  profile URL.
   #
 
-  s.author             =  "Rob Jonson" 
+  s.author             =  "Rob Jonson"
   # Or just: s.author    = "Rob Jonson"
   # s.authors            = { "Rob Jonson" => "rob@hobbyistsoftware.com" }
   # s.social_media_url   = "http://twitter.com/Rob Jonson"

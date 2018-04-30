@@ -10,12 +10,13 @@ import UIKit
 
 public typealias HSClickHandler = (HSTVRowInfo)->Void
 public typealias HSCellStyler = (HSTVRowInfo,UITableViewCell)->Void
+public typealias HSCellFilter = (HSTVRowInfo)->Bool
 
 public func == (lhs: HSTVRowInfo, rhs: HSTVRowInfo) -> Bool {
     return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
 }
 
-public class HSTVRowInfo: Equatable {
+open class HSTVRowInfo: Equatable {
     weak var section: HSTVSection?
     weak var table: HSTableView!
     public var lastIndexPath: IndexPath!
@@ -23,6 +24,8 @@ public class HSTVRowInfo: Equatable {
     public var style:UITableViewCellStyle? // Defaults to .Subtitle
     public var nib:UINib?
     public var reuseIdentifier:String?
+    
+    public var customInfo:Any?
     
 /**
      The value of textLabel.text is always set to the value of title (even if it is nil)
@@ -66,10 +69,30 @@ public class HSTVRowInfo: Equatable {
     public var rowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension
     public var estimatedRowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension. Returns rowHeight if that is set.
     
+    // Rows drawn at zero height if hidden. This allows animation in/out
+    // Setting non-hidden sets this to nil so that it allows higher rows in the responder chain to override
+    public var _hidden:Bool?
+    public var hidden:Bool? {
+        set {
+            if newValue == false {
+                _hidden = nil
+            }
+            else {
+                _hidden = newValue
+            }
+        }
+        get {
+            return _hidden
+        }
+
+    }
     
-    public convenience init (title: String?, subtitle: String? = nil, selectionStyle:UITableViewCellSelectionStyle? = nil, clickHandler:HSClickHandler? = nil)
+    public init() {
+        
+    }
+    
+    public init (title: String?, subtitle: String? = nil, selectionStyle:UITableViewCellSelectionStyle? = nil, clickHandler:HSClickHandler? = nil)
     {
-        self.init()
         self.title = title
         self.subtitle = subtitle
         self.selectionStyle = selectionStyle
@@ -82,15 +105,15 @@ public class HSTVRowInfo: Equatable {
         return next
     }
     
-    func makeNewCell(_ identifier: String, inheritedStyle: UITableViewCellStyle) -> UITableViewCell
+    open func makeNewCell(_ identifier: String, inheritedStyle: UITableViewCellStyle) -> UITableViewCell
     {
         return UITableViewCell(style: inheritedStyle , reuseIdentifier: identifier)
     }
     
-    fileprivate lazy var cellIdentifier : String = {
+    open lazy var cellIdentifier : String = {
         let theStyle = self.inheritedStyle
         
-        let identifier:String="\(theStyle)_\(self)_\(self.inheritedNib)_\(self.inheritedReuseIdentifier)_\(self.inheritedTintChevronDisclosures ?? false)"
+        let identifier:String="\(theStyle)_\(self)_\(String(describing:self.inheritedNib))_\(String(describing:self.inheritedReuseIdentifier))_\(self.inheritedTintChevronDisclosures ?? false)"
     
         return identifier
     }()
@@ -181,7 +204,7 @@ public class HSTVRowInfo: Equatable {
     
     //two things here;
     //1) trailing closure param doesn't need ()
-    //2) for sinvle argument closure, you don't need to give the boilerplate, and can refer to first input argument with $0
+    //2) for single argument closure, you don't need to give the boilerplate, and can refer to first input argument with $0
     internal func inheritedTitle() -> String? { return inherited { $0?.title } }
 
     internal func inheritedSubtitle() -> String? { return inherited { $0?.subtitle } }
@@ -191,6 +214,8 @@ public class HSTVRowInfo: Equatable {
     internal func inheritedSubtitleColor() -> UIColor? { return inherited{ $0?.subtitleColor }}
     
     internal func inheritedLeftImageName() -> String? { return inherited{ $0?.leftImageName }}
+    
+    internal func inheritedHidden() -> Bool? { return inherited{ $0?.hidden }}
     
     internal lazy var inheritedLeftImageColor : UIColor? = { self.inherited { $0?.leftImageColor } }()
     
@@ -264,12 +289,10 @@ public class HSTVRowInfo: Equatable {
     }
 
     internal lazy var inheritedRowHeight : CGFloat = {
-        let height = self.inherited({ row -> CGFloat? in
-            return row?.rowHeight
-        })
-        
+        let height = self.inherited { $0?.rowHeight }
         return height ?? UITableViewAutomaticDimension
     }()
+    
     
     internal lazy var inheritedEstimatedRowHeight : CGFloat = {
         if (self.inheritedRowHeight != UITableViewAutomaticDimension)
@@ -318,6 +341,10 @@ public class HSTVRowInfo: Equatable {
     
     func tableViewHeightForRow() -> CGFloat
     {
+        if self.inheritedHidden() == true {
+            return 0
+        }
+        
         return self.inheritedRowHeight
     }
     

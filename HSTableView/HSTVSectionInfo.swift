@@ -8,12 +8,13 @@
 
 import UIKit
 
-public class HSTVSectionInfo: HSTVRowInfo {
-    var headerHeight:CGFloat? // Defaults to 40 if title is set, or 0 if it is not
-    var footerHeight:CGFloat? // Defaults to 0
+open class HSTVSectionInfo: HSTVRowInfo {
+    public var headerHeight:CGFloat? // Defaults to 40 if title is set, or 0 if it is not
+    public var footerHeight:CGFloat? // Defaults to 0
+    public var header:UIView?
     var index=0
     
-    init(table: HSTableView, section: HSTVSection?) {
+    public init(table: HSTableView, section: HSTVSection?) {
         super.init()
         self.table=table
         self.section=section
@@ -25,6 +26,10 @@ public class HSTVSectionInfo: HSTVRowInfo {
     
     func viewForHeaderInSection() -> UIView?
     {
+        if let header = header {
+            return header
+        }
+        
         if let title = self.inheritedTitle()
         {
             let label=UILabel.init()
