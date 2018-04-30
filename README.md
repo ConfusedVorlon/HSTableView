@@ -115,7 +115,7 @@ note - if you're doing the same customisation for multiple cells - you can use a
 
 1. You can use the standard cell formats by setting HSTVRowInfo.style
 1. You can specify a custom nib with HSTVRowInfo.nib
-1. You can create a custom cell by subclassing HSTVRowInfo and overriding 
+1. You can create a custom cell by subclassing HSTVRowInfo and overriding
 
 	`func makeNewCell(_ identifier: String, inheritedStyle: UITableViewCellStyle) -> UITableViewCell`
 
@@ -135,13 +135,13 @@ there is a custom handler which can show/hide a checkmark and update a boolean U
 
 ## Filtering
 
-You can use the filter option to animate the appearance & disappearance of cells in your table. 
+You can use the filter option to animate the appearance & disappearance of cells in your table.
 When a row is hidden, then it’s height is set to 0 so that it can be animated away.
 You should consider this when designing your cell - the animation will work much faster if the cell has a fixed-height view so that it doesn’t need to be re-drawn multiple times as the cell animates down.
 
 For example - to filter the table by title, based on the text in a search bar:
 
- ```swift   
+ ```swift
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
         tableView.filter { (row) -> Bool in
@@ -152,7 +152,7 @@ For example - to filter the table by title, based on the text in a search bar:
 
 ## Detailed Demo
 
-![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/complexDemo.png)
+![Demo table](https://raw.githubusercontent.com/ConfusedVorlon/HSTableView/master/Images/complexDemo.gif)
 
 this function completely defines the example table
 
