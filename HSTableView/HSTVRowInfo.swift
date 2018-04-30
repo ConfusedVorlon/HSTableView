@@ -23,7 +23,9 @@ open class HSTVRowInfo: Equatable {
     
     public var style:UITableViewCellStyle? // Defaults to .Subtitle
     public var nib:UINib?
-    public var reuseIdentifier:String?
+    public var reuseIdentifier:String? //If you have manually registered a class or prototype with an identifier - then specify it here
+    public var reuseTag:String? // If you are just using a style, then a reuse identifier will be generated automatically based on any specified XIB, style or chevron. The reuseTag will be added to the identifier.
+    
     
     public var customInfo:Any?
     
@@ -107,13 +109,20 @@ open class HSTVRowInfo: Equatable {
     
     open func makeNewCell(_ identifier: String, inheritedStyle: UITableViewCellStyle) -> UITableViewCell
     {
-        return UITableViewCell(style: inheritedStyle , reuseIdentifier: identifier)
+        let cell = UITableViewCell(style: inheritedStyle , reuseIdentifier: identifier)
+        cell.clipsToBounds = true //Otherwise standard cells won't clip to bounds, and subtitles display for 0-height cells.
+        return cell
     }
     
-    open lazy var cellIdentifier : String = {
-        let theStyle = self.inheritedStyle
+    fileprivate lazy var cellIdentifier : String = {
+        if self.inheritedReuseIdentifier != nil {
+            return self.inheritedReuseIdentifier!
+        }
         
-        let identifier:String="\(theStyle)_\(self)_\(String(describing:self.inheritedNib))_\(String(describing:self.inheritedReuseIdentifier))_\(self.inheritedTintChevronDisclosures ?? false)"
+        let theStyle = self.inheritedStyle
+        let theReuseTag = self.inheritedReuseTag
+        
+        let identifier:String="\(theStyle)_\(self)_\(String(describing:self.inheritedNib))_\(String(describing:theReuseTag))_\(self.inheritedTintChevronDisclosures ?? false)"
     
         return identifier
     }()
@@ -173,9 +182,9 @@ open class HSTVRowInfo: Equatable {
         
         if let afterCreate = self.inheritedStyleAfterCreateHandler
         {
-            if (inheritedReuseIdentifier==nil)
+            if (inheritedReuseIdentifier==nil && inheritedReuseTag==nil)
             {
-                print("Warning: When using an afterCreate handler, you should set a reuse identifier. Otherwise, your cell can be re-used by a different row with a different (or no) afterCreate handler. IndexPath:\(self.lastIndexPath)")
+                print("Warning: When using an afterCreate handler, you should set a reuse tag or reuseIdentifier. Otherwise, if you change your cell, then it can be re-used later by a row which doesn't make the same changes. IndexPath:\(self.lastIndexPath)")
             }
             afterCreate(self,cell)
         }
@@ -245,44 +254,36 @@ open class HSTVRowInfo: Equatable {
     }()
     
     internal lazy var inheritedReuseIdentifier : String? = {
-        return self.inherited({ row -> String? in
-            return row?.reuseIdentifier
-        })
+        return self.inherited({ $0?.reuseIdentifier })
+    }()
+
+    internal lazy var inheritedReuseTag : String? = {
+        return self.inherited({ $0?.reuseTag })
     }()
     
     internal func inheritedClickHandler() -> HSClickHandler? {
-        return inherited({ row -> HSClickHandler? in
-            return row?.clickHandler
-        })
+        return inherited({ $0?.clickHandler  })
     }
     
     internal func inheritedDeleteHandler() -> HSClickHandler? {
-        return inherited({ row -> HSClickHandler? in
-            return row?.deleteHandler
-        })
+        return inherited({ $0?.deleteHandler  })
     }
     
     internal func inheritedAccessoryClickHandler() -> HSClickHandler? {
-        return inherited({ row -> HSClickHandler? in
-            return row?.accessoryClickHandler
-        })
+        return inherited({ $0?.accessoryClickHandler })
     }
     
     internal lazy var inheritedStyleAfterCreateHandler : HSCellStyler? = {
-        return self.inherited({ row -> HSCellStyler? in
-            return row?.styleAfterCreateHandler
-        })
+        return self.inherited({ $0?.styleAfterCreateHandler })
     }()
     
     internal lazy var inheritedStyleBeforeDisplayHandler : HSCellStyler? = {
-        return self.inherited({ row -> HSCellStyler? in
-            return row?.styleBeforeDisplayHandler
+        return self.inherited({ $0?.styleBeforeDisplayHandler
         })
     }()
     
     internal func inheritedAutoDeselect() -> Bool {
-        let autoDeselect = inherited({ row -> Bool? in
-            return row?.autoDeselect
+        let autoDeselect = inherited({ $0?.autoDeselect
         })
         
         return autoDeselect ?? true
@@ -300,17 +301,13 @@ open class HSTVRowInfo: Equatable {
             return self.inheritedRowHeight
         }
     
-        let height = self.inherited({ row -> CGFloat? in
-            return row?.estimatedRowHeight
-        })
+        let height = self.inherited({ $0?.estimatedRowHeight })
         
         return height ?? UITableViewAutomaticDimension
     }()
     
     internal lazy var inheritedNib : UINib? = {
-        let nib = self.inherited({ row -> UINib? in
-            return row?.nib
-        })
+        let nib = self.inherited({ $0?.nib })
         
         return nib
     }()
