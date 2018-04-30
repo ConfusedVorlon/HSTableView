@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,9 +28,63 @@
                                     <navigationItem title="HSTableView Demo" id="EdX-qz-XT6"/>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="E8S-om-qOY" customClass="HSTableView" customModule="HSTableViewDemo" customModuleProvider="target">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="E8S-om-qOY" customClass="HSTableView" customModule="HSTableViewDemo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="G8S-0R-ydf">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="BYZ-38-t0r" id="8Uj-39-GL8"/>
+                                    </connections>
+                                </searchBar>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProtoCell" id="tfh-pC-k7E" customClass="ImageViewCell" customModule="HSTableViewDemo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tfh-pC-k7E" id="tXe-Zf-P6S">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jordan-steranka-645051-unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="s0l-SD-O6e">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="O9H-Ng-Vy8">
+                                                    <rect key="frame" x="15" y="21" width="345" height="2"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OKi-9m-Uex">
+                                                            <rect key="frame" x="0.0" y="0.0" width="345" height="2"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIb-lB-Ze2">
+                                                            <rect key="frame" x="0.0" y="2" width="345" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="s0l-SD-O6e" secondAttribute="bottom" id="18Z-F4-aWi"/>
+                                                <constraint firstItem="s0l-SD-O6e" firstAttribute="leading" secondItem="tXe-Zf-P6S" secondAttribute="leading" id="COX-P1-zup"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="O9H-Ng-Vy8" secondAttribute="bottom" constant="10" id="Kvz-eB-eIb"/>
+                                                <constraint firstAttribute="trailing" secondItem="s0l-SD-O6e" secondAttribute="trailing" id="NdQ-TI-IYp"/>
+                                                <constraint firstItem="O9H-Ng-Vy8" firstAttribute="top" secondItem="tXe-Zf-P6S" secondAttribute="topMargin" constant="10" id="SIx-Tb-yxS"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="O9H-Ng-Vy8" secondAttribute="trailing" id="TEA-r9-2fn"/>
+                                                <constraint firstItem="s0l-SD-O6e" firstAttribute="top" secondItem="tXe-Zf-P6S" secondAttribute="top" id="WA7-Rh-BOt"/>
+                                                <constraint firstItem="O9H-Ng-Vy8" firstAttribute="leading" secondItem="tXe-Zf-P6S" secondAttribute="leadingMargin" id="eKP-op-f6d"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="label1" destination="OKi-9m-Uex" id="l8l-RJ-yWY"/>
+                                            <outlet property="label2" destination="dIb-lB-Ze2" id="JBv-rj-dcV"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -53,4 +108,7 @@
             <point key="canvasLocation" x="381" y="565"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="jordan-steranka-645051-unsplash" width="340" height="70"/>
+    </resources>
 </document>

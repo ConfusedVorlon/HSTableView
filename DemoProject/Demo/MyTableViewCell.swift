@@ -19,10 +19,8 @@ class MyTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        //self.textLabel?.hidden=true
-
-        self.contentView.backgroundColor=UIColor.red
+        
+        self.contentView.backgroundColor=UIColor.gray
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {

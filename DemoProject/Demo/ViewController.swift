@@ -45,15 +45,15 @@ class ViewController: UIViewController {
             row.subtitle="clicked at \(Date.init())"
             row.redrawCell(UITableViewRowAnimation.fade)
         };
-        
-        // Section 1
+
+        // Section
         // Add a section with a simple title
         //
         var section=self.table.addSection("Regular cells")
         // Provide some defaults for items in this section
         section.info.titleColor=UIColor.blue
         section.info.subtitleColor=UIColor.orange
-        
+
         //First row has a simple click handler that reloads the table data
         //The number or rows is random - so you can see the effect of the reload
         var row=HSTVRowInfo(title:"Reload Table",subtitle: "Number of rows in first section is somewhat random")
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
             self.populateTable()
         };
         table += row
-        
+
         let numberOfRandoms=arc4random_uniform(6)
         //Random number of rows with the title 'Section One'
         //Odd rows get their subtitle from the table
@@ -79,8 +79,8 @@ class ViewController: UIViewController {
             }
             table += row
         }
-  
-        // Section 2
+
+        // Section
         // Simple swipe to delete row
         //
         self.table.addSection("Editable")
@@ -88,8 +88,8 @@ class ViewController: UIViewController {
         row.editingStyle=UITableViewCellEditingStyle.delete
         row.deleteHandler=row.simpleDeleteHandler
         table += row
-        
-        // Section 3
+
+        // Section
         // Row value is linked to the user default 'TestDefault'
         //
         self.table.addSection("Linked to default")
@@ -98,7 +98,7 @@ class ViewController: UIViewController {
                             checkedSubtitle: "Checked (user default true)",
                             uncheckedSubtitle: "UnChecked (user default false)")
         table += row
-        
+
         //Row value is linked to the user default 'TestDefault', but checkmark shows when value is false
         row = HSTVRowInfo(title: "Linked to UserDefault 'TestOppositeDefault'")
         row.handleCheckmark(userDefault:"TestOppositeDefault",
@@ -106,27 +106,27 @@ class ViewController: UIViewController {
                             uncheckedSubtitle: "UnChecked (user default true)",
                             checkmarkShowsForFalse: true)
         table += row
-        
-        // Section 4
+
+        // Section
         // Various accessory views
         // (including coloured disclosure indicators)
         section=self.table.addSection("Accessory views")
         section.info.subtitle=""
-        
+
         row = HSTVRowInfo(title:"Chevron")
         row.accessoryType = .disclosureIndicator
         row.leftImageName="04-squiggle"
         row.tintColor=UIColor.orange
         row.tintChevronDisclosures = true
         table += row
-        
-        
+
+
         row = HSTVRowInfo(title:"Chevron")
         row.accessoryType = .disclosureIndicator
         row.tintColor=UIColor.orange
         table += row
-        
-        
+
+
         row = HSTVRowInfo(title:"Disclosure")
         row.accessoryType = .detailDisclosureButton
         row.leftImageName="04-squiggle"
@@ -138,11 +138,11 @@ class ViewController: UIViewController {
             print ("Disclosure accessory clicked")
         }
         table += row
-        
+
         row = HSTVRowInfo(title:"Checkmark")
         row.accessoryType = .checkmark
         table += row
-        
+
         row = HSTVRowInfo(title:"Info")
         row.accessoryType = .detailButton
         row.accessoryClickHandler = {
@@ -151,7 +151,23 @@ class ViewController: UIViewController {
         }
         table += row
         
-        // Section 5
+//         Section
+//         Row loaded from prototype cell
+        section = self.table.addSection("Cell Prototype")
+        section.info.reuseIdentifier = "ProtoCell"
+
+        
+        for i in 1...2 {
+            let row=HSTVRowInfo(title:"One: \(i)")
+            if (i%2==0)
+            {
+                row.subtitle="subtitle"
+            }
+            table += row
+        }
+        
+        
+        // Section
         // Row loaded from custom xib
         //
         section = self.table.addSection("Custom Xib")
@@ -169,7 +185,7 @@ class ViewController: UIViewController {
             table += row
         }
         
-        // Section 6
+        // Section
         // Nil title for section makes the header invisibile
         // styleAfterCreate handler used to set custom background and override label colours
         //
@@ -180,7 +196,7 @@ class ViewController: UIViewController {
         }
         
         //style after create handler in this section customises the row in code
-        //setting a reuseIdentifier makes sure that this cell is not re-used elsewhere
+        //setting a reuseTag makes sure that this cell is not re-used elsewhere
         section.info.styleAfterCreateHandler = {
             row,cell in
             
@@ -193,7 +209,7 @@ class ViewController: UIViewController {
             cell.textLabel?.textColor=UIColor.white
             cell.detailTextLabel?.textColor=UIColor.white
         }
-        section.info.reuseIdentifier="orange"
+        section.info.reuseTag="orange"
         
         self.table.applyDataUpdate()
     }
@@ -204,5 +220,20 @@ class ViewController: UIViewController {
     }
     
     
+}
+
+extension ViewController: UISearchBarDelegate {
+    
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        table.filter { (row) -> Bool in
+            if searchText.count == 0 {
+                return true
+            }
+            return row.title?.lowercased().contains(searchText.lowercased()) ?? false
+        }
+    }
+    
+
 }
 
