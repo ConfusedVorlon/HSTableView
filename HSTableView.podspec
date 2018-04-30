@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "HSTableView"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "A simpler, more elegant UITableView using objects, blocks and no delegates"
 
   # This description is used to generate tags and improve search results.
