@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         table.info.subtitle="Table default subtitle"
         table.info.clickHandler = {row in
             //Default click handler prints the index path, updates the subtitle and redraws the row
-            print("Table handler click: \(row.lastIndexPath)")
+            print("Table handler click: \(String(describing: row.lastIndexPath))")
             row.subtitle="clicked at \(Date.init())"
             row.redrawCell(UITableViewRowAnimation.fade)
         };

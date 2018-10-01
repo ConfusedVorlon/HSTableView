@@ -184,7 +184,7 @@ open class HSTVRowInfo: Equatable {
         {
             if (inheritedReuseIdentifier==nil && inheritedReuseTag==nil)
             {
-                print("Warning: When using an afterCreate handler, you should set a reuse tag or reuseIdentifier. Otherwise, if you change your cell, then it can be re-used later by a row which doesn't make the same changes. IndexPath:\(self.lastIndexPath)")
+                print("Warning: When using an afterCreate handler, you should set a reuse tag or reuseIdentifier. Otherwise, if you change your cell, then it can be re-used later by a row which doesn't make the same changes. IndexPath:\(String(describing: self.lastIndexPath))")
             }
             afterCreate(self,cell)
         }
@@ -350,7 +350,7 @@ open class HSTVRowInfo: Equatable {
         
         if (estimatedHeight == UITableViewAutomaticDimension && self.inheritedNib != nil)
         {
-            print("Warning: when using a nib, you should set estimatedRowHeight or rowHeight.\nCurrently using UITableViewAutomaticDimension for indexPath:\(self.lastIndexPath)")
+            print("Warning: when using a nib, you should set estimatedRowHeight or rowHeight.\nCurrently using UITableViewAutomaticDimension for indexPath:\(String(describing: self.lastIndexPath))")
         }
         
         return estimatedHeight
