@@ -29,7 +29,7 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
     {
         self.delegate=self
         self.dataSource=self
-        self.rowHeight=UITableViewAutomaticDimension
+        self.rowHeight=UITableView.automaticDimension
         self.info=HSTVTableInfo(table: self)
     }
 
@@ -38,7 +38,7 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         doInitialSetup()
     }
 
-    public override init(frame: CGRect, style: UITableViewStyle) {
+    public override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         doInitialSetup()
     }
@@ -151,7 +151,7 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
     {
         row.section?.removeRow(row)
         let deleteArray=[row.lastIndexPath!]
-        self.deleteRows(at: deleteArray as [IndexPath],with:UITableViewRowAnimation.automatic)
+        self.deleteRows(at: deleteArray as [IndexPath],with:UITableView.RowAnimation.automatic)
     }
 
     // filter function should return true to show row, false to hide it
@@ -238,13 +238,13 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         return (ri.inheritedEditingStyle == .delete)
     }
 
-    public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         let ri = try! self.infoFor(indexPath)
         return ri.inheritedEditingStyle
     }
 
-    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle==UITableViewCellEditingStyle.delete)
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle==UITableViewCell.EditingStyle.delete)
         {
             let ri = try! self.infoFor(indexPath)
             ri.tableViewDidDeleteRow()

@@ -43,7 +43,7 @@ class ViewController: UIViewController {
             //Default click handler prints the index path, updates the subtitle and redraws the row
             print("Table handler click: \(String(describing: row.lastIndexPath))")
             row.subtitle="clicked at \(Date.init())"
-            row.redrawCell(UITableViewRowAnimation.fade)
+            row.redrawCell(UITableView.RowAnimation.fade)
         };
 
         // Section
@@ -85,7 +85,7 @@ class ViewController: UIViewController {
         //
         self.table.addSection("Editable")
         row = HSTVRowInfo(title: "Swipe to delete")
-        row.editingStyle=UITableViewCellEditingStyle.delete
+        row.editingStyle=UITableViewCell.EditingStyle.delete
         row.deleteHandler=row.simpleDeleteHandler
         table += row
 
