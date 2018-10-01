@@ -25,7 +25,7 @@ extension HSTVRowInfo {
             (row) in
             let currentValue=get()
             set(!currentValue)
-            row.redrawCell(UITableViewRowAnimation.fade)
+            row.redrawCell(UITableView.RowAnimation.fade)
         };
         
         self.styleBeforeDisplayHandler = {
@@ -48,7 +48,7 @@ extension HSTVRowInfo {
                 }
             }
             
-            cell.accessoryType = checkmarkValue ? UITableViewCellAccessoryType.checkmark : UITableViewCellAccessoryType.none
+            cell.accessoryType = checkmarkValue ? UITableViewCell.AccessoryType.checkmark : UITableViewCell.AccessoryType.none
             
         }
     }
