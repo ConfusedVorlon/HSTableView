@@ -36,6 +36,7 @@ open class HSTVRowInfo: Equatable {
      */
     public var title:String?
     public var titleColor:UIColor?
+    public var backgroundColor:UIColor?
 /**
      The value of detailTextLabel.text is always set to the value of subtitle (even if it is nil)
      */
@@ -93,12 +94,19 @@ open class HSTVRowInfo: Equatable {
         
     }
     
-    public init (title: String?, subtitle: String? = nil, selectionStyle:UITableViewCell.SelectionStyle? = nil, clickHandler:HSClickHandler? = nil)
+    public init (title: String?,
+                 subtitle: String? = nil,
+                 leftImageName:String? = nil,
+                 selectionStyle:UITableViewCell.SelectionStyle? = nil,
+                 clickHandler:HSClickHandler? = nil)
     {
         self.title = title
         self.subtitle = subtitle
+        self.leftImageName = leftImageName
         self.selectionStyle = selectionStyle
+        
         self.clickHandler = clickHandler
+        
     }
     
     func nextResponder() -> HSTVRowInfo? {
@@ -179,6 +187,8 @@ open class HSTVRowInfo: Equatable {
         
         cell.tintColor = inheritedTintColor
         
+        cell.backgroundColor = inheritedBackgroundColor()
+        
         
         if let afterCreate = self.inheritedStyleAfterCreateHandler
         {
@@ -219,6 +229,8 @@ open class HSTVRowInfo: Equatable {
     internal func inheritedSubtitle() -> String? { return inherited { $0?.subtitle } }
     
     internal func inheritedTitleColor() -> UIColor? { return inherited{ $0?.titleColor } }
+    
+    internal func inheritedBackgroundColor() -> UIColor { return inherited{ $0?.backgroundColor } ?? .white }
     
     internal func inheritedSubtitleColor() -> UIColor? { return inherited{ $0?.subtitleColor }}
     

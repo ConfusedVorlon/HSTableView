@@ -18,8 +18,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        populateTable()
+        self.view.backgroundColor = UIColor.darkGray
         
+        populateTable()
         
         navItem.rightBarButtonItem = self.editButtonItem
         
@@ -30,6 +31,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     func populateTable()
     {
         table.startDataUpdate()
@@ -38,6 +43,10 @@ class ViewController: UIViewController {
         // Provide defaults for all rows in the table
         // This will apply unless a value is set at a more specific level (section or row)
         table.info.subtitleColor = UIColor.lightGray
+        table.info.backgroundColor = .darkGray
+        table.info.titleColor = .white
+        table.info.leftImageColor = .white
+        
         table.info.subtitle="Table default subtitle"
         table.info.clickHandler = {row in
             //Default click handler prints the index path, updates the subtitle and redraws the row
@@ -51,13 +60,13 @@ class ViewController: UIViewController {
         //
         var section=self.table.addSection("Regular cells")
         // Provide some defaults for items in this section
-        section.info.titleColor=UIColor.blue
         section.info.subtitleColor=UIColor.orange
 
         //First row has a simple click handler that reloads the table data
         //The number or rows is random - so you can see the effect of the reload
         var row=HSTVRowInfo(title:"Reload Table",subtitle: "Number of rows in first section is somewhat random")
         row.leftImageName="713-refresh-1"
+        row.leftImageColor = .orange
         row.clickHandler = {
             [unowned self] (row) in
             self.populateTable()
