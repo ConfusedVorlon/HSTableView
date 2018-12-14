@@ -167,6 +167,33 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         self.endUpdates()
     }
 
+    
+    /// Show or hide a section
+    ///
+    /// - Parameters:
+    ///   - section: section index
+    ///   - visibility: true, false or toggle if nil
+    ///   - apply: if true, apply the change
+    public func show(section sectionIndex:Int, visibility newVisiblity:Bool?,apply:Bool = true) {
+        guard let sectionInfo = try?  self.infoFor(sectionIndex) else {
+            return
+        }
+        var visibile =  (sectionInfo.hidden == nil || sectionInfo.hidden == false)
+        if let newVisiblity = newVisiblity {
+            visibile = newVisiblity
+        }
+        else {
+            visibile = !visibile
+        }
+        
+        sectionInfo.hidden = !visibile
+          
+        if apply {
+            self.beginUpdates()
+            self.endUpdates()
+        }
+    }
+    
     // MARK: UITableViewDataSource
 
     public func numberOfSections(in tableView: UITableView) -> Int{
