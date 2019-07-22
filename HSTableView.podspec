@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "HSTableView"
-  s.version      = "1.1.0"
+  s.version      = "1.2.0"
   s.summary      = "A simpler, more elegant UITableView using objects, blocks instead of delegates"
 
   # This description is used to generate tags and improve search results.
@@ -79,7 +79,7 @@ HSTableView is suitable for situations where there is a known finite number of r
   # s.platform     = :ios
   s.platform     = :ios, "9.0"
 
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"

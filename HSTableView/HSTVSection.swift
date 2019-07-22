@@ -39,7 +39,7 @@ public class HSTVSection {
     
     func removeRow(_ row: HSTVRowInfo)
     {
-        if let index = rows.index(of: row) {
+        if let index = rows.firstIndex(of: row) {
             rows.remove(at: index)
         }
     }
