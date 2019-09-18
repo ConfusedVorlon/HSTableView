@@ -10,7 +10,7 @@ import Foundation
 
 /// HSTVSection holds an array of HSTVRows
 public class HSTVSection {
-    var rows:[HSTVRowInfo]=[HSTVRowInfo]()
+    public var rows:[HSTVRowInfo]=[HSTVRowInfo]()
     
     weak var table: HSTableView!
     
