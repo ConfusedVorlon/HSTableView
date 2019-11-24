@@ -16,7 +16,7 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
 
     enum HSTableViewError: Error {
         case rowDoesNotExist(indexPath:IndexPath)
-        case sectionDoesNotExist(indexPath:IndexPath)
+        case sectionDoesNotExist(index:Int)
     }
 
     public var info:HSTVTableInfo! {
@@ -118,13 +118,17 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
     }
 
 
-    func infoFor(_ indexPath:IndexPath) throws -> HSTVRowInfo {
-
-        guard (indexPath.section<sections.count) else {
-            throw HSTableViewError.sectionDoesNotExist(indexPath: indexPath)
+    func sectionFor(_ index:Int) throws -> HSTVSection {
+        guard (index<sections.count) else {
+            throw HSTableViewError.sectionDoesNotExist(index: index)
         }
 
-        let section = sections[indexPath.section]
+        return sections[index]
+    }
+    
+    func infoFor(_ indexPath:IndexPath) throws -> HSTVRowInfo {
+
+        let section = try sectionFor(indexPath.section)
 
         guard (indexPath.row<section.rows.count) else {
             throw HSTableViewError.rowDoesNotExist(indexPath: indexPath)
@@ -138,11 +142,7 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
 
     func infoFor(_ section: Int) throws -> HSTVSectionInfo {
 
-        guard (section<sections.count) else {
-            throw HSTableViewError.sectionDoesNotExist(indexPath: IndexPath.init(row: -1, section: section))
-        }
-
-        let section = sections[section]
+        let section = try sectionFor(section)
 
         return section.info
     }
@@ -153,8 +153,54 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         let deleteArray=[row.lastIndexPath!]
         self.deleteRows(at: deleteArray as [IndexPath],with:UITableView.RowAnimation.automatic)
     }
+    
+    // MARK: Index
+    private var sectionIndexTitles:[String]?
+    public var sectionForIndex:Int? {
+        didSet {
+            prepareSectionIndex()
+        }
+    }
+    
+    func prepareSectionIndex() {
+        defer {
+            self.reloadSectionIndexTitles()
+        }
+        
+        guard let sectionForIndex = sectionForIndex else {
+            self.sectionIndexTitles = nil
+            return
+        }
+        
 
-    // filter function should return true to show row, false to hide it
+        guard let section = try? sectionFor(sectionForIndex) else {
+            print("Error: Trying to index on a section that doesn't exist: \(sectionForIndex)")
+            self.sectionIndexTitles = nil
+            return
+        }
+        
+        
+        let titles = section.rows.compactMap { (info) -> String? in
+            if let substring = info.title?.prefix(1) {
+                return String(substring).uppercased()
+            }
+            return nil
+        }
+        
+        let uniqueTitles:[String] = Array(Set(titles))
+        let sortedTitles = uniqueTitles.sorted(by:{ x,y in
+            return x.localizedStandardCompare(y) == ComparisonResult.orderedAscending
+        })
+        
+        sectionIndexTitles = sortedTitles
+    
+    }
+    
+    // MARK: Manage Visibility
+
+
+    /// Filter visible rows
+    /// - Parameter showRowFunction: return true to show row, false to hide it
     public func filter(showRowFunction : HSCellFilter)
     {
         for section in sections {
@@ -164,6 +210,7 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         }
 
         self.beginUpdates()
+        self.reloadData()
         self.endUpdates()
     }
 
@@ -190,6 +237,7 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
           
         if apply {
             self.beginUpdates()
+            self.reloadData()
             self.endUpdates()
         }
     }
@@ -210,8 +258,38 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         return sections[section].rows.count
     }
 
+    public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return sectionIndexTitles
+    }
+    
+    public func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        if let sectionForIndex = sectionForIndex {
+            var selectedIndexPath = IndexPath.init(row: 0, section: sectionForIndex)
+            for rowIndex in 0..<numberOfRows(inSection: sectionForIndex) {
+                let rowIndexPath = IndexPath.init(row: rowIndex, section: sectionForIndex)
+                if let info = try? infoFor(rowIndexPath),
+                    let rowTitle = info.title {
+                    let comparison = rowTitle.localizedCaseInsensitiveCompare(title)
+                    if comparison == .orderedAscending {
+                        selectedIndexPath = rowIndexPath
+                    }
+                    else {
+                        break
+                    }
+                }
+            }
+            
+            self.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .top)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.deselectRow(at: selectedIndexPath, animated: true)
+            }
+            
+        }
+        
+        return -1
+    }
 
-    // MARK UITableViewDelegate
+    // MARK: UITableViewDelegate
 
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
