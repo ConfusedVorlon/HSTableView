@@ -19,63 +19,64 @@ public func == (lhs: HSTVRowInfo, rhs: HSTVRowInfo) -> Bool {
 open class HSTVRowInfo: Equatable {
     weak var section: HSTVSection?
     weak var table: HSTableView!
-    public var lastIndexPath: IndexPath!
+    open var lastIndexPath: IndexPath!
     
-    public var style:UITableViewCell.CellStyle? // Defaults to .Subtitle
-    public var nib:UINib?
-    public var reuseIdentifier:String? //If you have manually registered a class or prototype with an identifier - then specify it here
-    public var reuseTag:String? // If you are just using a style, then a reuse identifier will be generated automatically based on any specified XIB, style or chevron. The reuseTag will be added to the identifier.
+    open var style:UITableViewCell.CellStyle? // Defaults to .Subtitle
+    open var nib:UINib?
+    
+    open var reuseIdentifier:String? //If you have manually registered a class or prototype with an identifier - then specify it here
+    open var reuseTag:String? // If you are just using a style, then a reuse identifier will be generated automatically based on any specified XIB, style or chevron. The reuseTag will be added to the identifier.
     
     
-    public var customInfo:Any?
+    open var customInfo:Any?
     
 /**
      The value of textLabel.text is always set to the value of title (even if it is nil)
      This means that if you have a custom cell with no textLabel, then the OS will create a textLabel.
      You'll want to make sure that is hidden either in your cell's initialisation, or in your styleAfterCreateHandler
      */
-    public var title:String?
-    public var titleColor:UIColor?
-    public var backgroundColor:UIColor?
+    open var title:String?
+    open var titleColor:UIColor?
+    open var backgroundColor:UIColor?
 /**
      The value of detailTextLabel.text is always set to the value of subtitle (even if it is nil)
      */
-    public var subtitle:String?
-    public var subtitleColor:UIColor?
+    open var subtitle:String?
+    open var subtitleColor:UIColor?
     
-    public var leftImageName:String?
+    open var leftImageName:String?
     /**
      If set, then any image set through leftImageName will be rendered as a template with this colour
      */
-    public var leftImageColor:UIColor?
+    open var leftImageColor:UIColor?
     /**
      If set, the chevron image is swapped for one rendered with the disclosure colour
      */
-    public var tintChevronDisclosures:Bool?
-    public var tintColor:UIColor?
+    open var tintChevronDisclosures:Bool?
+    open var tintColor:UIColor?
     
     /**
      Note that only grey/default and none are honoured from iOS7
  */
-    public var selectionStyle:UITableViewCell.SelectionStyle?
-    public var accessoryType:UITableViewCell.AccessoryType?
-    public var editingStyle:UITableViewCell.EditingStyle? //Defaults to .None
+    open var selectionStyle:UITableViewCell.SelectionStyle?
+    open var accessoryType:UITableViewCell.AccessoryType?
+    open var editingStyle:UITableViewCell.EditingStyle? //Defaults to .None
     
-    public var clickHandler:HSClickHandler?
-    public var deleteHandler:HSClickHandler?
-    public var accessoryClickHandler:HSClickHandler?
-    public var styleAfterCreateHandler:HSCellStyler?
-    public var styleBeforeDisplayHandler:HSCellStyler?
+    open var clickHandler:HSClickHandler?
+    open var deleteHandler:HSClickHandler?
+    open var accessoryClickHandler:HSClickHandler?
+    open var styleAfterCreateHandler:HSCellStyler?
+    open var styleBeforeDisplayHandler:HSCellStyler?
 
     
-    public var autoDeselect:Bool? // Defaults to true
-    public var rowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension
-    public var estimatedRowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension. Returns rowHeight if that is set.
+    open var autoDeselect:Bool? // Defaults to true
+    open var rowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension
+    open var estimatedRowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension. Returns rowHeight if that is set.
     
     // Rows drawn at zero height if hidden. This allows animation in/out
     // Setting non-hidden sets this to nil so that it allows higher rows in the responder chain to override
-    public var _hidden:Bool?
-    public var hidden:Bool? {
+    open var _hidden:Bool?
+    open var hidden:Bool? {
         set {
             if newValue == false {
                 _hidden = nil
@@ -115,9 +116,10 @@ open class HSTVRowInfo: Equatable {
         return next
     }
     
+    
     open func makeNewCell(_ identifier: String, inheritedStyle: UITableViewCell.CellStyle) -> UITableViewCell
     {
-        let cell = UITableViewCell(style: inheritedStyle , reuseIdentifier: identifier)
+        let cell = UITableViewCell.init(style: inheritedStyle , reuseIdentifier: identifier)
         cell.clipsToBounds = true //Otherwise standard cells won't clip to bounds, and subtitles display for 0-height cells.
         return cell
     }
@@ -161,13 +163,13 @@ open class HSTVRowInfo: Equatable {
     
     func doInitialConfigurationFor(_ cell: UITableViewCell)
     {
-        cell.textLabel?.text = inheritedTitle()
-        cell.textLabel?.textColor = inheritedTitleColor()
+        cell.textLabel?.text = inheritedTitle
+        cell.textLabel?.textColor = inheritedTitleColor
 
-        cell.detailTextLabel?.text = inheritedSubtitle()
-        cell.detailTextLabel?.textColor = inheritedSubtitleColor()
+        cell.detailTextLabel?.text = inheritedSubtitle
+        cell.detailTextLabel?.textColor = inheritedSubtitleColor
         
-        if let imageName=inheritedLeftImageName() {
+        if let imageName=inheritedLeftImageName {
             var image = UIImage.init(named: imageName)
             if let imageColour = inheritedLeftImageColor
             {
@@ -183,11 +185,11 @@ open class HSTVRowInfo: Equatable {
         }
         
         cell.selectionStyle = inheritedSelectionStyle
-        cell.accessoryType = inheritedAccessoryType()
+        cell.accessoryType = inheritedAccessoryType
         
         cell.tintColor = inheritedTintColor
         
-        cell.backgroundColor = inheritedBackgroundColor()
+        cell.backgroundColor = inheritedBackgroundColor
         
         
         if let afterCreate = self.inheritedStyleAfterCreateHandler
@@ -201,7 +203,7 @@ open class HSTVRowInfo: Equatable {
         
     }
     
-    public func redrawCell(_ withRowAnimation: UITableView.RowAnimation) -> Void {
+    open func redrawCell(_ withRowAnimation: UITableView.RowAnimation) -> Void {
         table.reloadRows(at: [self.lastIndexPath], with: withRowAnimation)
     }
     
@@ -224,19 +226,19 @@ open class HSTVRowInfo: Equatable {
     //two things here;
     //1) trailing closure param doesn't need ()
     //2) for single argument closure, you don't need to give the boilerplate, and can refer to first input argument with $0
-    internal func inheritedTitle() -> String? { return inherited { $0?.title } }
+    internal var inheritedTitle:String? { return inherited { $0?.title } }
 
-    internal func inheritedSubtitle() -> String? { return inherited { $0?.subtitle } }
+    internal var inheritedSubtitle:String? { return inherited { $0?.subtitle } }
     
-    internal func inheritedTitleColor() -> UIColor? { return inherited{ $0?.titleColor } }
+    internal var inheritedTitleColor:UIColor? { return inherited{ $0?.titleColor } }
     
-    internal func inheritedBackgroundColor() -> UIColor { return inherited{ $0?.backgroundColor } ?? .white }
+    internal var inheritedBackgroundColor:UIColor { return inherited{ $0?.backgroundColor } ?? .white }
     
-    internal func inheritedSubtitleColor() -> UIColor? { return inherited{ $0?.subtitleColor }}
+    internal var inheritedSubtitleColor:UIColor? { return inherited{ $0?.subtitleColor }}
     
-    internal func inheritedLeftImageName() -> String? { return inherited{ $0?.leftImageName }}
+    internal var inheritedLeftImageName:String? { return inherited{ $0?.leftImageName }}
     
-    internal func inheritedHidden() -> Bool? { return inherited{ $0?.hidden }}
+    internal var inheritedHidden:Bool? { return inherited{ $0?.hidden }}
     
     internal lazy var inheritedLeftImageColor : UIColor? = { self.inherited { $0?.leftImageColor } }()
     
@@ -255,7 +257,7 @@ open class HSTVRowInfo: Equatable {
     }()
     
     
-    internal func inheritedAccessoryType() -> UITableViewCell.AccessoryType {
+    internal var inheritedAccessoryType:UITableViewCell.AccessoryType {
         let style = inherited{ $0?.accessoryType }
         return style ?? .none
     }
@@ -273,15 +275,15 @@ open class HSTVRowInfo: Equatable {
         return self.inherited({ $0?.reuseTag })
     }()
     
-    internal func inheritedClickHandler() -> HSClickHandler? {
+    internal var inheritedClickHandler:HSClickHandler? {
         return inherited({ $0?.clickHandler  })
     }
     
-    internal func inheritedDeleteHandler() -> HSClickHandler? {
+    internal var inheritedDeleteHandler:HSClickHandler? {
         return inherited({ $0?.deleteHandler  })
     }
     
-    internal func inheritedAccessoryClickHandler() -> HSClickHandler? {
+    internal var inheritedAccessoryClickHandler:HSClickHandler? {
         return inherited({ $0?.accessoryClickHandler })
     }
     
@@ -294,7 +296,7 @@ open class HSTVRowInfo: Equatable {
         })
     }()
     
-    internal func inheritedAutoDeselect() -> Bool {
+    internal var inheritedAutoDeselect:Bool {
         let autoDeselect = inherited({ $0?.autoDeselect
         })
         
@@ -350,7 +352,7 @@ open class HSTVRowInfo: Equatable {
     
     func tableViewHeightForRow() -> CGFloat
     {
-        if self.inheritedHidden() == true {
+        if self.inheritedHidden == true {
             return 0
         }
         
@@ -370,9 +372,9 @@ open class HSTVRowInfo: Equatable {
     
     func tableViewDidSelectRow()
     {
-        self.inheritedClickHandler()?(self)
+        self.inheritedClickHandler?(self)
         
-        if (self.inheritedAutoDeselect())
+        if (self.inheritedAutoDeselect)
         {
             self.table.deselectRow(at: self.lastIndexPath, animated: true)
         }
@@ -380,12 +382,12 @@ open class HSTVRowInfo: Equatable {
     
     func tableViewDidDeleteRow()
     {
-        self.inheritedDeleteHandler()?(self)
+        self.inheritedDeleteHandler?(self)
     }
     
     func tableViewAccessoryButtonTapped()
     {
-        self.inheritedAccessoryClickHandler()?(self)
+        self.inheritedAccessoryClickHandler?(self)
     }
     
 }

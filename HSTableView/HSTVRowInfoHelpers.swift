@@ -17,7 +17,7 @@ extension HSTVRowInfo {
      The get and set functions let you deal with the result
      The true and false subtitles give the user more info. (Note - if you set one of these, you must set both)
      */
-    public func handleCheckmark(checkedSubtitle: String? = nil, uncheckedSubtitle: String? = nil, get:@escaping () -> Bool, set:@escaping (Bool) -> Void){
+    open func handleCheckmark(checkedSubtitle: String? = nil, uncheckedSubtitle: String? = nil, get:@escaping () -> Bool, set:@escaping (Bool) -> Void){
         
         assert( (checkedSubtitle == nil) == (uncheckedSubtitle == nil),"If you provide a trueSubtitle, or falseSubtitle, you must provide both")
         
@@ -59,7 +59,7 @@ extension HSTVRowInfo {
      The checkmark shows the value of the default (or the opposite if checkmarkShowsForFalse is true)
      The true and false subtitles give the user more info. (Note - if you set one of these, you must set both)
      */
-    public func handleCheckmark(userDefault:String, checkedSubtitle: String?, uncheckedSubtitle: String?, checkmarkShowsForFalse: Bool = false){
+    open func handleCheckmark(userDefault:String, checkedSubtitle: String?, uncheckedSubtitle: String?, checkmarkShowsForFalse: Bool = false){
         
         
         handleCheckmark(checkedSubtitle: checkedSubtitle,
@@ -81,7 +81,7 @@ extension HSTVRowInfo {
     /// You can use this as 'row.deleteHandler=row.simpleDeleteHandler'
     ///
     /// - Parameter row: the row
-    public func simpleDeleteHandler(_ row: HSTVRowInfo) {
+    open func simpleDeleteHandler(_ row: HSTVRowInfo) {
         row.table!.delete(row)
     }
 }

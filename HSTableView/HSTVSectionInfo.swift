@@ -9,9 +9,9 @@
 import UIKit
 
 open class HSTVSectionInfo: HSTVRowInfo {
-    public var headerHeight:CGFloat? // Defaults to 40 if title is set, or 0 if it is not
-    public var footerHeight:CGFloat? // Defaults to 0
-    public var header:UIView?
+    open var headerHeight:CGFloat? // Defaults to 40 if title is set, or 0 if it is not
+    open var footerHeight:CGFloat? // Defaults to 0
+    open var header:UIView?
     var index=0
     
     public init(table: HSTableView, section: HSTVSection?) {
@@ -30,7 +30,7 @@ open class HSTVSectionInfo: HSTVRowInfo {
             return header
         }
         
-        if let title = self.inheritedTitle()
+        if let title = self.inheritedTitle
         {
             let label=UILabel.init()
             label.text=title
@@ -67,7 +67,7 @@ open class HSTVSectionInfo: HSTVRowInfo {
         }
         else
         {
-            if self.inheritedTitle() != nil
+            if self.inheritedTitle != nil
             {
                 return 40
             }
