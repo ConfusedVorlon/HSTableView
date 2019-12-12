@@ -190,7 +190,10 @@ open class HSTVRowInfo: Equatable {
         
         cell.tintColor = inheritedTintColor
         
-        cell.backgroundColor = inheritedBackgroundColor
+        if let inheritedBackgroundColor = inheritedBackgroundColor {
+            cell.backgroundColor = inheritedBackgroundColor
+        }
+        
         
         
         if let afterCreate = self.inheritedStyleAfterCreateHandler
@@ -233,7 +236,7 @@ open class HSTVRowInfo: Equatable {
     
     internal var inheritedTitleColor:UIColor? { return inherited{ $0?.titleColor } }
     
-    internal var inheritedBackgroundColor:UIColor { return inherited{ $0?.backgroundColor } ?? .white }
+    internal var inheritedBackgroundColor:UIColor? { return inherited{ $0?.backgroundColor } }
     
     internal var inheritedSubtitleColor:UIColor? { return inherited{ $0?.subtitleColor }}
     
