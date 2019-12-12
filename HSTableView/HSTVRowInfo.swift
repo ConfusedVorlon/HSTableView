@@ -23,6 +23,7 @@ open class HSTVRowInfo: Equatable {
     
     open var style:UITableViewCell.CellStyle? // Defaults to .Subtitle
     open var nib:UINib?
+    open var cellType:UITableViewCell.Type?
     
     open var reuseIdentifier:String? //If you have manually registered a class or prototype with an identifier - then specify it here
     open var reuseTag:String? // If you are just using a style, then a reuse identifier will be generated automatically based on any specified XIB, style or chevron. The reuseTag will be added to the identifier.
@@ -119,7 +120,7 @@ open class HSTVRowInfo: Equatable {
     
     open func makeNewCell(_ identifier: String, inheritedStyle: UITableViewCell.CellStyle) -> UITableViewCell
     {
-        let cell = UITableViewCell.init(style: inheritedStyle , reuseIdentifier: identifier)
+        let cell = inheritedCellType.init(style: inheritedStyle , reuseIdentifier: identifier)
         cell.clipsToBounds = true //Otherwise standard cells won't clip to bounds, and subtitles display for 0-height cells.
         return cell
     }
@@ -326,6 +327,12 @@ open class HSTVRowInfo: Equatable {
         return nib
     }()
     
+    internal lazy var inheritedCellType : UITableViewCell.Type = {
+        let theType = self.inherited({ $0?.cellType })
+        
+        return theType ?? UITableViewCell.self
+    }()
+
     
     //MARK: UITableView related delegate methods
     
