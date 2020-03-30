@@ -36,6 +36,12 @@ open class HSTVSectionInfo: HSTVRowInfo {
             label.text=title
             label.textAlignment=NSTextAlignment.center
             label.backgroundColor=UIColor.lightGray
+            
+            if #available(iOS 13.0, *) {
+                label.backgroundColor = UIColor.secondarySystemBackground
+                label.textColor = UIColor.label
+            }
+            
 
             return label
         }

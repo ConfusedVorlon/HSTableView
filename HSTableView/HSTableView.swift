@@ -116,6 +116,20 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
 
         return addSection(newSection)
     }
+    
+    /// Add a simple section with a view
+    ///
+    /// - Parameter view: the header
+    /// - Parameter height: the header height
+    /// - Returns: the section
+    @discardableResult open func addSection(_ view: UIView, height:CGFloat = 40 ) -> HSTVSection{
+        let newSection=HSTVSection(table: self);
+        newSection.info.header = view
+        newSection.info.headerHeight = height
+
+        return addSection(newSection)
+    }
+
 
 
     func sectionFor(_ index:Int) throws -> HSTVSection {

@@ -74,6 +74,9 @@ open class HSTVRowInfo: Equatable {
     open var rowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension
     open var estimatedRowHeight:CGFloat? // Defaults to UITableViewAutomaticDimension. Returns rowHeight if that is set.
     
+    //used in handleSwitch extension
+    var switchSetter:((Bool)->Void)?
+    
     // Rows drawn at zero height if hidden. This allows animation in/out
     // Setting non-hidden sets this to nil so that it allows higher rows in the responder chain to override
     open var _hidden:Bool?

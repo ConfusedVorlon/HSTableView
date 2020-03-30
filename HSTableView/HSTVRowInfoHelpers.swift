@@ -11,6 +11,8 @@ import UIKit
 
 extension HSTVRowInfo {
     
+    //MARK: Checkmarks
+    
     
     /**
      Convenience function that uses the click handler and styleBeforeDisplay handler to update a checkmark
@@ -67,15 +69,98 @@ extension HSTVRowInfo {
                         get: { () -> Bool in
                             let value=UserDefaults.standard.bool(forKey: userDefault)
                             return checkmarkShowsForFalse ? !value : value
-        }) { (newValue) in
-            let value = checkmarkShowsForFalse ? !newValue : newValue
-            UserDefaults.standard.set(value, forKey: userDefault)
-        }
+                            },
+                        set:  { (newValue) in
+                            let value = checkmarkShowsForFalse ? !newValue : newValue
+                            UserDefaults.standard.set(value, forKey: userDefault)
+                            }
+        )
         
     }
     
     
+ //switch freezes with invalid mode 'kCFRunLoopCommonModes' provided to CFRunLoopRunSpecific - break on _CFRunLoopError_RunCalledWithInvalidMode to debug. This message will only appear once per execution.
     
+//    //MARK: Switch
+//    open func handleSwitch(withSwitch:UISwitch? = nil,
+//                            selectedSubtitle: String? = nil,
+//                           deselectedSubtitle: String? = nil,
+//                           get:@escaping () -> Bool,
+//                           set:@escaping (Bool) -> Void) {
+//
+//        assert( (selectedSubtitle == nil) == (deselectedSubtitle == nil),"If you provide a trueSubtitle, or falseSubtitle, you must provide both")
+//
+//        let aSwitch = withSwitch ?? UISwitch()
+//        //aSwitch.addTarget(self, action:#selector(switchChanged(sender:)), for: .valueChanged)
+//
+//        switchSetter = set
+//
+//        self.styleBeforeDisplayHandler = {
+//            (row,cell) in
+//            let value=get()
+//
+//            if (value)
+//            {
+//                if (selectedSubtitle != nil)
+//                {
+//                    cell.detailTextLabel?.text=selectedSubtitle
+//                }
+//            }
+//            else
+//            {
+//                if (deselectedSubtitle != nil)
+//                {
+//                    cell.detailTextLabel?.text=deselectedSubtitle
+//                }
+//            }
+//
+//            if cell.accessoryView != aSwitch {
+//                cell.accessoryView = aSwitch
+//            }
+//
+//            aSwitch.isOn = value
+//
+//        }
+//
+//    }
+//
+//    @objc
+//    func switchChanged(sender:UISwitch) {
+//        let newValue = sender.isOn
+//        switchSetter?(newValue)
+//        DispatchQueue.main.async {
+//            self.redrawCell(UITableView.RowAnimation.fade)
+//        }
+//
+//    }
+//
+//
+//    /// Use a switch to set a userDefault
+//    /// - Parameters:
+//    ///   - userDefault: default key
+//    ///   - withSwitch: provide a switch if you want to customise the appearance
+//    ///   - selectedSubtitle: subtitle when switch is on
+//    ///   - deselectedSubtitle: subtitle when switch is off
+//    open func handleSwitch(userDefault:String,
+//                           withSwitch:UISwitch? = nil,
+//                           selectedSubtitle: String? = nil,
+//                           deselectedSubtitle: String? = nil) {
+//
+//
+//        handleSwitch(withSwitch: withSwitch,
+//            selectedSubtitle: selectedSubtitle,
+//                        deselectedSubtitle: deselectedSubtitle,
+//                        get: { () -> Bool in
+//                            return UserDefaults.standard.bool(forKey: userDefault)
+//                        },
+//            set:  { (newValue) in
+//                       UserDefaults.standard.set(newValue, forKey: userDefault)
+//                   }
+//        )
+//
+//    }
+    
+    //MARK: Delete Handler
     
     /// Simple delete handler that just gets rid of the row
     /// You can use this as 'row.deleteHandler=row.simpleDeleteHandler'
