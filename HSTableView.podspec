@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "HSTableView"
-  s.version      = "1.2.2"
+  s.version      = "1.2.3"
   s.summary      = "A simpler, more elegant UITableView using objects, blocks instead of delegates"
 
   # This description is used to generate tags and improve search results.
@@ -25,9 +25,10 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
-A simpler, more elegant UITableView. Rows are managed by objects. Things happen with blocks.
+A simpler, more elegant UITableView, more in the style of SwiftUI than Objective-C.
+Rows are managed by objects. Things happen with blocks.
 
-Your whole table is declared up front with no need for delegates
+Your whole table is declared up front with no delegates
 
 The table view uses a responder chain to provide settings. Any setting can be set at the row level, the section level or the table level.
 
@@ -105,7 +106,7 @@ HSTableView is suitable for situations where there is a known finite number of r
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "HSTableView"
+  s.source_files  = "Sources/HSTableView/*.swift"
   # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"

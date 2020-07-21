@@ -12,18 +12,18 @@
 		D4232C171CF8BC20004C1D44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4232C151CF8BC20004C1D44 /* Main.storyboard */; };
 		D4232C191CF8BC20004C1D44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4232C181CF8BC20004C1D44 /* Assets.xcassets */; };
 		D4232C1C1CF8BC20004C1D44 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4232C1A1CF8BC20004C1D44 /* LaunchScreen.storyboard */; };
+		D45F17EC24C6F5A400C8AD0F /* HSTVTableInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F17E624C6F5A400C8AD0F /* HSTVTableInfo.swift */; };
+		D45F17ED24C6F5A400C8AD0F /* HSTVSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F17E724C6F5A400C8AD0F /* HSTVSection.swift */; };
+		D45F17EE24C6F5A400C8AD0F /* HSTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F17E824C6F5A400C8AD0F /* HSTableView.swift */; };
+		D45F17EF24C6F5A400C8AD0F /* HSTVRowInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F17E924C6F5A400C8AD0F /* HSTVRowInfo.swift */; };
+		D45F17F024C6F5A400C8AD0F /* HSTVRowInfoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F17EA24C6F5A400C8AD0F /* HSTVRowInfoHelpers.swift */; };
+		D45F17F124C6F5A400C8AD0F /* HSTVSectionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F17EB24C6F5A400C8AD0F /* HSTVSectionInfo.swift */; };
 		D46F0F9B1CFDB23000FCA676 /* MyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D46F0F9A1CFDB23000FCA676 /* MyTableViewCell.xib */; };
 		D46F0F9E1D0326C000FCA676 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D46F0F9D1D0326C000FCA676 /* UIKit.framework */; };
 		D46F0FA01D0326C700FCA676 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D46F0F9F1D0326C700FCA676 /* CoreGraphics.framework */; };
 		D46F0FA21D0326DE00FCA676 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D46F0FA11D0326DE00FCA676 /* CoreFoundation.framework */; };
 		D46F0FA41D0326EA00FCA676 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D46F0FA31D0326EA00FCA676 /* Foundation.framework */; };
 		D4ADB5EF20975DD300A47E4A /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4ADB5EE20975DD300A47E4A /* ImageCell.swift */; };
-		D4D226CB1D05E2F3003836EA /* HSTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D226C51D05E2F3003836EA /* HSTableView.swift */; };
-		D4D226CC1D05E2F3003836EA /* HSTVRowInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D226C61D05E2F3003836EA /* HSTVRowInfo.swift */; };
-		D4D226CD1D05E2F3003836EA /* HSTVRowInfoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D226C71D05E2F3003836EA /* HSTVRowInfoHelpers.swift */; };
-		D4D226CE1D05E2F3003836EA /* HSTVSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D226C81D05E2F3003836EA /* HSTVSection.swift */; };
-		D4D226CF1D05E2F3003836EA /* HSTVSectionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D226C91D05E2F3003836EA /* HSTVSectionInfo.swift */; };
-		D4D226D01D05E2F3003836EA /* HSTVTableInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D226CA1D05E2F3003836EA /* HSTVTableInfo.swift */; };
 		D4D226D21D05E308003836EA /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D226D11D05E308003836EA /* MyTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,18 +35,18 @@
 		D4232C181CF8BC20004C1D44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4232C1B1CF8BC20004C1D44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D4232C1D1CF8BC20004C1D44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D45F17E624C6F5A400C8AD0F /* HSTVTableInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTVTableInfo.swift; sourceTree = "<group>"; };
+		D45F17E724C6F5A400C8AD0F /* HSTVSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTVSection.swift; sourceTree = "<group>"; };
+		D45F17E824C6F5A400C8AD0F /* HSTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTableView.swift; sourceTree = "<group>"; };
+		D45F17E924C6F5A400C8AD0F /* HSTVRowInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTVRowInfo.swift; sourceTree = "<group>"; };
+		D45F17EA24C6F5A400C8AD0F /* HSTVRowInfoHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTVRowInfoHelpers.swift; sourceTree = "<group>"; };
+		D45F17EB24C6F5A400C8AD0F /* HSTVSectionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTVSectionInfo.swift; sourceTree = "<group>"; };
 		D46F0F9A1CFDB23000FCA676 /* MyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyTableViewCell.xib; sourceTree = "<group>"; };
 		D46F0F9D1D0326C000FCA676 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D46F0F9F1D0326C700FCA676 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D46F0FA11D0326DE00FCA676 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		D46F0FA31D0326EA00FCA676 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D4ADB5EE20975DD300A47E4A /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
-		D4D226C51D05E2F3003836EA /* HSTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTableView.swift; sourceTree = "<group>"; };
-		D4D226C61D05E2F3003836EA /* HSTVRowInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTVRowInfo.swift; sourceTree = "<group>"; };
-		D4D226C71D05E2F3003836EA /* HSTVRowInfoHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTVRowInfoHelpers.swift; sourceTree = "<group>"; };
-		D4D226C81D05E2F3003836EA /* HSTVSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTVSection.swift; sourceTree = "<group>"; };
-		D4D226C91D05E2F3003836EA /* HSTVSectionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTVSectionInfo.swift; sourceTree = "<group>"; };
-		D4D226CA1D05E2F3003836EA /* HSTVTableInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTVTableInfo.swift; sourceTree = "<group>"; };
 		D4D226D11D05E308003836EA /* MyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,7 +96,7 @@
 		D4232C101CF8BC20004C1D44 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				D4D226C41D05E2F3003836EA /* HSTableView */,
+				D45F17E524C6F5A400C8AD0F /* HSTableView */,
 				D46F0F991CFDB21400FCA676 /* Cells */,
 				D4232C111CF8BC20004C1D44 /* AppDelegate.swift */,
 				D4232C131CF8BC20004C1D44 /* ViewController.swift */,
@@ -108,6 +108,20 @@
 			path = Demo;
 			sourceTree = SOURCE_ROOT;
 		};
+		D45F17E524C6F5A400C8AD0F /* HSTableView */ = {
+			isa = PBXGroup;
+			children = (
+				D45F17E624C6F5A400C8AD0F /* HSTVTableInfo.swift */,
+				D45F17E724C6F5A400C8AD0F /* HSTVSection.swift */,
+				D45F17E824C6F5A400C8AD0F /* HSTableView.swift */,
+				D45F17E924C6F5A400C8AD0F /* HSTVRowInfo.swift */,
+				D45F17EA24C6F5A400C8AD0F /* HSTVRowInfoHelpers.swift */,
+				D45F17EB24C6F5A400C8AD0F /* HSTVSectionInfo.swift */,
+			);
+			name = HSTableView;
+			path = ../../Sources/HSTableView;
+			sourceTree = "<group>";
+		};
 		D46F0F991CFDB21400FCA676 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,20 +130,6 @@
 				D4ADB5EE20975DD300A47E4A /* ImageCell.swift */,
 			);
 			name = Cells;
-			sourceTree = "<group>";
-		};
-		D4D226C41D05E2F3003836EA /* HSTableView */ = {
-			isa = PBXGroup;
-			children = (
-				D4D226C51D05E2F3003836EA /* HSTableView.swift */,
-				D4D226CA1D05E2F3003836EA /* HSTVTableInfo.swift */,
-				D4D226C61D05E2F3003836EA /* HSTVRowInfo.swift */,
-				D4D226C71D05E2F3003836EA /* HSTVRowInfoHelpers.swift */,
-				D4D226C81D05E2F3003836EA /* HSTVSection.swift */,
-				D4D226C91D05E2F3003836EA /* HSTVSectionInfo.swift */,
-			);
-			name = HSTableView;
-			path = ../../HSTableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,16 +206,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4D226D01D05E2F3003836EA /* HSTVTableInfo.swift in Sources */,
 				D4232C141CF8BC20004C1D44 /* ViewController.swift in Sources */,
-				D4D226CB1D05E2F3003836EA /* HSTableView.swift in Sources */,
-				D4D226CC1D05E2F3003836EA /* HSTVRowInfo.swift in Sources */,
+				D45F17EE24C6F5A400C8AD0F /* HSTableView.swift in Sources */,
+				D45F17EC24C6F5A400C8AD0F /* HSTVTableInfo.swift in Sources */,
 				D4232C121CF8BC20004C1D44 /* AppDelegate.swift in Sources */,
 				D4D226D21D05E308003836EA /* MyTableViewCell.swift in Sources */,
-				D4D226CD1D05E2F3003836EA /* HSTVRowInfoHelpers.swift in Sources */,
-				D4D226CF1D05E2F3003836EA /* HSTVSectionInfo.swift in Sources */,
-				D4D226CE1D05E2F3003836EA /* HSTVSection.swift in Sources */,
+				D45F17EF24C6F5A400C8AD0F /* HSTVRowInfo.swift in Sources */,
+				D45F17ED24C6F5A400C8AD0F /* HSTVSection.swift in Sources */,
 				D4ADB5EF20975DD300A47E4A /* ImageCell.swift in Sources */,
+				D45F17F124C6F5A400C8AD0F /* HSTVSectionInfo.swift in Sources */,
+				D45F17F024C6F5A400C8AD0F /* HSTVRowInfoHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
