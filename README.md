@@ -17,8 +17,6 @@ It doesn’t support infinite scrolling tables (you’ll have to use UITableView
 
 ## Installation
 
-use cocoa pods:
-
 
 Use [CocoaPods](https://github.com/cocoapods/cocoapods)
 
@@ -26,6 +24,8 @@ Use [CocoaPods](https://github.com/cocoapods/cocoapods)
 ```Ruby
 pod 'HSTableView'
 ```
+
+or Use Swift Package Manager
 
 ## Simple Example
 
