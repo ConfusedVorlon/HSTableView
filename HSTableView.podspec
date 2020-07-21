@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
-A simpler, more elegant UITableView, more in the style of SwiftUI than Objective-C.
+A simpler, more elegant UITableView, more in the style of SwiftUI than UIKit.
 Rows are managed by objects. Things happen with blocks.
 
 Your whole table is declared up front with no delegates

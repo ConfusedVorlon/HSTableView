@@ -1,6 +1,7 @@
 # HSTableView
 
-A simpler, more elegant UITableView. Rows are managed by objects. Things happen with blocks.
+A simpler, more elegant UITableView, more in the style of SwiftUI than UIKit.
+Rows are managed by objects. Things happen with blocks.
 
 Your whole table is declared up front with no delegates.
 
