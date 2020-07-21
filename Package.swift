@@ -27,4 +27,3 @@ let package = Package(
             dependencies: ["HSTableView"]),
     ],
     swiftLanguageVersions: [.v5])
-)
