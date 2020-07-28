@@ -74,14 +74,7 @@ open class HSTVSectionInfo: HSTVRowInfo {
             return 0
         }
         
-        if let height = inheritedHeaderHeight
-        {
-            return height
-        }
-        else
-        {
-            return HSTVSectionInfo.defaultHeaderHeight
-        }
+        return  inheritedHeaderHeight ?? HSTVSectionInfo.defaultHeaderHeight
     }
     
     func tableViewHeightForFooterInSection() -> CGFloat
