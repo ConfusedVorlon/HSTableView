@@ -6,7 +6,7 @@ final class HSTableViewTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(HSTableView().text, "Hello, World!")
+
     }
 
     static var allTests = [

@@ -9,7 +9,9 @@
 import UIKit
 
 open class HSTVSectionInfo: HSTVRowInfo {
-    open var headerHeight:CGFloat? // Defaults to 40 if title is set, or 0 if it is not
+    public static let defaultHeaderHeight:CGFloat = 40
+    
+    open var headerHeight:CGFloat? // Defaults to 40 if title or header is set, or 0 otherwise
     open var footerHeight:CGFloat? // Defaults to 0
     open var header:UIView?
     var index=0
@@ -67,20 +69,18 @@ open class HSTVSectionInfo: HSTVRowInfo {
     
     func tableViewHeightForHeaderInSection() -> CGFloat
     {
+        //If we don't have a header, and we don't have a title to auto-generate one, then zero height
+        if header == nil && self.inheritedTitle == nil {
+            return 0
+        }
+        
         if let height = inheritedHeaderHeight
         {
             return height
         }
         else
         {
-            if self.inheritedTitle != nil
-            {
-                return 40
-            }
-            else
-            {
-                return 0
-            }
+            return HSTVSectionInfo.defaultHeaderHeight
         }
     }
     

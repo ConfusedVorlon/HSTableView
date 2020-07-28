@@ -122,7 +122,7 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
     /// - Parameter view: the header
     /// - Parameter height: the header height
     /// - Returns: the section
-    @discardableResult open func addSection(_ view: UIView, height:CGFloat = 40 ) -> HSTVSection{
+    @discardableResult open func addSection(_ view: UIView, height:CGFloat = HSTVSectionInfo.defaultHeaderHeight ) -> HSTVSection{
         let newSection=HSTVSection(table: self);
         newSection.info.header = view
         newSection.info.headerHeight = height
