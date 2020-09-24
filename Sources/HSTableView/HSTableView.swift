@@ -131,8 +131,8 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
     }
 
 
-
-    func sectionFor(_ index:Int) throws -> HSTVSection {
+    //You shouldn't really need this except in obscure subclassing
+    open func sectionFor(_ index:Int) throws -> HSTVSection {
         guard (index<sections.count) else {
             throw HSTableViewError.sectionDoesNotExist(index: index)
         }
@@ -140,7 +140,8 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         return sections[index]
     }
     
-    func infoFor(_ indexPath:IndexPath) throws -> HSTVRowInfo {
+    //You shouldn't really need this except in obscure subclassing
+    open func infoFor(_ indexPath:IndexPath) throws -> HSTVRowInfo {
 
         let section = try sectionFor(indexPath.section)
 
@@ -154,7 +155,8 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         return info
     }
 
-    func infoFor(_ section: Int) throws -> HSTVSectionInfo {
+    //You shouldn't really need this except in obscure subclassing
+    open func infoFor(_ section: Int) throws -> HSTVSectionInfo {
 
         let section = try sectionFor(section)
 
