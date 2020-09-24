@@ -165,9 +165,17 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
 
     open func delete(_ row: HSTVRowInfo)
     {
-        row.section?.removeRow(row)
-        let deleteArray=[row.lastIndexPath!]
-        self.deleteRows(at: deleteArray as [IndexPath],with:UITableView.RowAnimation.automatic)
+        self.delete([row])
+    }
+    
+    open func delete(_ rows: [HSTVRowInfo])
+    {
+        for row in rows {
+            row.section?.removeRow(row)
+        }
+        let paths:[IndexPath] = rows.compactMap { $0.lastIndexPath }
+        self.deleteRows(at: paths,with:UITableView.RowAnimation.automatic)
+        
     }
     
     // MARK: Index
