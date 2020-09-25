@@ -165,10 +165,10 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
 
     open func delete(_ row: HSTVRowInfo)
     {
-        self.delete([row])
+        self.delete(rows:[row])
     }
     
-    open func delete(_ rows: [HSTVRowInfo])
+    open func delete(rows: [HSTVRowInfo])
     {
         for row in rows {
             row.section?.removeRow(row)
