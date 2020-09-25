@@ -344,6 +344,9 @@ open class HSTVRowInfo: Equatable {
     
     func tableView(willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath)
     {
+        let hide = (self.inheritedHidden == true)
+        cell.isHidden = hide
+        
         if inheritedTintChevronDisclosures == true {
             for case let button as UIButton in cell.subviews {
                 let image = button.backgroundImage(for: UIControl.State())?.withRenderingMode(.alwaysTemplate)
