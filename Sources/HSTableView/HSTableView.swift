@@ -70,13 +70,15 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         {
             DispatchQueue.main.async(execute: {
                 self.sections=self.pendingSections!
-                self.reloadData()
+                self.updateData(animated: animated)
             })
         }
     }
 
     private func updateData(animated:Bool) {
-        self.reloadData()
+        if self.window != nil {
+            self.reloadData()
+        }  
     }
 
     /**
