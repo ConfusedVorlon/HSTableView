@@ -274,9 +274,13 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         return sections.count
     }
 
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    open func tableView(_ tableView: UITableView,
+                        cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let ri = try! self.infoFor(indexPath)
+        guard let ri = try? self.infoFor(indexPath) else {
+            return UITableViewCell(style: .default,
+                                   reuseIdentifier: nil)
+        }
         return ri.cell()
     }
 
@@ -317,26 +321,39 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
 
     // MARK: UITableViewDelegate
 
-    open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    open func tableView(_ tableView: UITableView,
+                        willDisplay cell: UITableViewCell,
+                        forRowAt indexPath: IndexPath)
     {
-        let ri = try! self.infoFor(indexPath)
+        guard let ri = try? self.infoFor(indexPath) else {
+            return
+        }
         ri.tableView(willDisplayCell: cell, forRowAtIndexPath: indexPath)
     }
 
-    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    open func tableView(_ tableView: UITableView,
+                        didSelectRowAt indexPath: IndexPath)
     {
-        let ri = try! self.infoFor(indexPath)
+        guard let ri = try? self.infoFor(indexPath) else {
+            return
+        }
         ri.tableViewDidSelectRow()
     }
 
-    open func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath)
+    open func tableView(_ tableView: UITableView,
+                        accessoryButtonTappedForRowWith indexPath: IndexPath)
     {
-        let ri = try! self.infoFor(indexPath)
+        guard let ri = try? self.infoFor(indexPath) else {
+            return
+        }
         ri.tableViewAccessoryButtonTapped()
     }
 
-    open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        let ri = try! self.infoFor(indexPath)
+    open func tableView(_ tableView: UITableView,
+                        estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let ri = try? self.infoFor(indexPath) else {
+            return 0
+        }
         if ri.inheritedHidden == true {
             return 0
         }
@@ -345,44 +362,64 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
 
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        let ri = try! self.infoFor(indexPath)
+        guard let ri = try? self.infoFor(indexPath) else {
+            return 0
+        }
         return ri.tableViewHeightForRow();
     }
 
-    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    open func tableView(_ tableView: UITableView,
+                        heightForHeaderInSection section: Int) -> CGFloat
     {
-        let si = try! self.infoFor(section)
+        guard let si = try? self.infoFor(section) else {
+            return 0
+        }
         return si.tableViewHeightForHeaderInSection()
     }
 
-    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    open func tableView(_ tableView: UITableView,
+                        viewForHeaderInSection section: Int) -> UIView?
     {
-        let si = try! self.infoFor(section)
+        guard let si = try? self.infoFor(section) else {
+            return nil
+        }
         return si.viewForHeaderInSection()
     }
 
     //MARK UITableViewDelegate Editing
 
-    open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    open func tableView(_ tableView: UITableView,
+                        canEditRowAt indexPath: IndexPath) -> Bool {
 
-        let ri = try! self.infoFor(indexPath)
+        guard let ri = try? self.infoFor(indexPath) else {
+            return false
+        }
         return (ri.inheritedEditingStyle == .delete)
     }
 
-    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        let ri = try! self.infoFor(indexPath)
+    open func tableView(_ tableView: UITableView,
+                        editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        guard let ri = try? self.infoFor(indexPath) else {
+            return .none
+        }
         return ri.inheritedEditingStyle
     }
 
-    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView,
+                        commit editingStyle: UITableViewCell.EditingStyle,
+                        forRowAt indexPath: IndexPath) {
+ 
         if (editingStyle==UITableViewCell.EditingStyle.delete)
         {
-            let ri = try! self.infoFor(indexPath)
+            guard let ri = try? self.infoFor(indexPath) else {
+                return
+            }
             ri.tableViewDidDeleteRow()
         }
     }
 
-    open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    open func tableView(_ tableView: UITableView,
+                        editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         return nil
     }
 }
