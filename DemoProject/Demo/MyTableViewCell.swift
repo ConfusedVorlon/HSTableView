@@ -12,33 +12,29 @@ class MyTableViewCell: UITableViewCell {
 
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var label2: UILabel!
-    
+
 //    @IBOutlet var textLabel: UILabel!
 //    @IBOutlet var detailTextLabel: UILabel!
-   
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         self.contentView.backgroundColor=UIColor.gray
     }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-    }
-    
-    override var textLabel: UILabel?
-    {
-        return self.label1;
-    }
-    
-    override var detailTextLabel: UILabel?
-    {
-        return self.label2;
+
     }
 
-    
+    override var textLabel: UILabel? {
+        return self.label1
+    }
+
+    override var detailTextLabel: UILabel? {
+        return self.label2
+    }
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

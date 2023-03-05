@@ -10,38 +10,37 @@ import Foundation
 
 /// HSTVSection holds an array of HSTVRows
 open class HSTVSection {
-    open var rows:[HSTVRowInfo]=[HSTVRowInfo]()
-    
+    open var rows: [HSTVRowInfo]=[HSTVRowInfo]()
+
     weak var table: HSTableView!
-    
-    open var info:HSTVSectionInfo! {
-        willSet (newSectionInfo){
+
+    open var info: HSTVSectionInfo! {
+        willSet (newSectionInfo) {
             newSectionInfo.section=self
-            newSectionInfo.table=table;
+            newSectionInfo.table=table
         }
     }
-    
+
     init (table: HSTableView) {
         self.table=table
-        self.info=HSTVSectionInfo(table:table, section: self)
+        self.info=HSTVSectionInfo(table: table, section: self)
     }
-    
+
     /**
      Adds a row to this section
      
      The convenience function += can also be used e.g. ```section+=row```
      */
     open func addRow(_ row: HSTVRowInfo) {
-        row.section=self;
-        row.table=table;
+        row.section=self
+        row.table=table
         rows.append(row)
     }
-    
-    func removeRow(_ row: HSTVRowInfo)
-    {
+
+    func removeRow(_ row: HSTVRowInfo) {
         if let index = rows.firstIndex(of: row) {
             rows.remove(at: index)
         }
     }
-    
+
 }

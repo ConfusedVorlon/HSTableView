@@ -8,18 +8,17 @@
 
 import Foundation
 
-
 /// This is the top responder in the chain:
 /// HSTVRowInfo > HSTVSectionInfo > HSTVTableInfo
 /// Any properties from lower sections can be set here to provide defaults
 public class HSTVTableInfo: HSTVSectionInfo {
-    
+
     init(table: HSTableView) {
-        super.init(table:table, section:nil)
+        super.init(table: table, section: nil)
     }
-    
+
     override func nextResponder() -> HSTVRowInfo? {
-        return nil;
+        return nil
     }
 
 }
