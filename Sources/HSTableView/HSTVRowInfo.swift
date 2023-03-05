@@ -121,9 +121,11 @@ open class HSTVRowInfo: Equatable {
     }
     
     
-    open func makeNewCell(_ identifier: String, inheritedStyle: UITableViewCell.CellStyle) -> UITableViewCell
+    open func makeNewCell(_ identifier: String,
+                          inheritedStyle: UITableViewCell.CellStyle) -> UITableViewCell
     {
-        let cell = inheritedCellType.init(style: inheritedStyle , reuseIdentifier: identifier)
+        let cell = inheritedCellType.init(style: inheritedStyle ,
+                                          reuseIdentifier: identifier)
         cell.clipsToBounds = true //Otherwise standard cells won't clip to bounds, and subtitles display for 0-height cells.
         return cell
     }
@@ -342,7 +344,8 @@ open class HSTVRowInfo: Equatable {
     
     //MARK: UITableView related delegate methods
     
-    func tableView(willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath)
+    func tableView(willDisplayCell cell: UITableViewCell,
+                   forRowAtIndexPath indexPath: IndexPath)
     {
         let hide = (self.inheritedHidden == true)
         cell.isHidden = hide

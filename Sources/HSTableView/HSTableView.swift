@@ -38,7 +38,8 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         doInitialSetup()
     }
 
-    public override init(frame: CGRect, style: UITableView.Style) {
+    public override init(frame: CGRect,
+                         style: UITableView.Style) {
         super.init(frame: frame, style: style)
         doInitialSetup()
     }
@@ -247,7 +248,9 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
     ///   - section: section index
     ///   - visibility: true, false or toggle if nil
     ///   - apply: if true, apply the change
-    open func show(section sectionIndex:Int, visibility newVisiblity:Bool?,apply:Bool = true) {
+    open func show(section sectionIndex:Int,
+                   visibility newVisiblity:Bool?,
+                   apply:Bool = true) {
         guard let sectionInfo = try?  self.infoFor(sectionIndex) else {
             return
         }
@@ -284,7 +287,8 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         return ri.cell()
     }
 
-    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView,
+                        numberOfRowsInSection section: Int) -> Int {
         return sections[section].rows.count
     }
 
@@ -292,7 +296,8 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         return sectionIndexTitles
     }
     
-    open func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+    open func tableView(_ tableView: UITableView,
+                        sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         if let sectionForIndex = sectionForIndex {
             var selectedIndexPath = IndexPath.init(row: 0, section: sectionForIndex)
             for rowIndex in 0..<numberOfRows(inSection: sectionForIndex) {
@@ -328,7 +333,8 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         guard let ri = try? self.infoFor(indexPath) else {
             return
         }
-        ri.tableView(willDisplayCell: cell, forRowAtIndexPath: indexPath)
+        ri.tableView(willDisplayCell: cell,
+                     forRowAtIndexPath: indexPath)
     }
 
     open func tableView(_ tableView: UITableView,
@@ -360,7 +366,8 @@ open class HSTableView: UITableView, UIScrollViewDelegate, UITableViewDelegate, 
         return ri.tableViewEstimatedHeightForRow();
     }
 
-    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    open func tableView(_ tableView: UITableView,
+                        heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         guard let ri = try? self.infoFor(indexPath) else {
             return 0
